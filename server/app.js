@@ -1,9 +1,18 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
 
 const projectRoutes = require('./routes/projects');
 const sequelize = require('./database/database');
 
 const app = express();
+
+app.use(cors());
+
+app.use(helmet());
+
+app.use(bodyParser.json());
 
 app.use(projectRoutes);
 
@@ -11,10 +20,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-sequelize.authenticate()
+sequelize.sync()
 .then(() => {
   app.listen(process.env.SERVER_PORT, () => {
-    console.log('Test okay')
+    console.log('Started okay')
   });
 })
 .catch(err => {
