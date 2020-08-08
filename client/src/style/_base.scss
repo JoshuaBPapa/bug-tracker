@@ -1,0 +1,17 @@
+* {
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $bgWhite;
+  font-family: 'Open Sans', sans-serif;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+}

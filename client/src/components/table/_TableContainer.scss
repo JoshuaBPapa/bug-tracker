@@ -1,0 +1,38 @@
+.TableContainer {
+  background-color: white;
+  min-width: 100%;
+  overflow: auto;
+  
+  table {
+    border-spacing: 0;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+
+    th {
+      button {
+        background-color: $primaryColour;
+        color: white;
+        display: inline-block;
+        font-weight: bold;
+        padding: 10px 0;
+        text-transform: capitalize;  
+        width: 100%;
+      }
+    }
+
+    tbody {
+      tr {
+        background-color: #f8f8f8;
+
+        &:nth-child(odd) {
+          background-color: #ddd;
+        }
+      }
+    }
+
+    td {
+      padding: 10px 5px
+    }
+  }
+}
