@@ -12,4 +12,4 @@ const Project = sequelize.define('project', {
   name: Sequelize.STRING(45)
 });
  
-module.exports = Project;
+module.exports = Project; 

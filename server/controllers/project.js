@@ -1,7 +1,17 @@
+const Sequelize = require('sequelize');
+
 const Project = require('../models/project');
+const Ticket = require('../models/ticket');
 
 exports.getProjects = (req, res) => {
-  Project.findAll()
+  Project.findAll({
+    attributes: { 
+      include: [[Sequelize.fn("COUNT", Sequelize.col("tickets.projectId")), "ticketCount"]] 
+    },
+    include: {
+      model: Ticket
+    }
+  })
   .then(projects => {
     if (projects.length) {
       res.status(200).send(projects);
@@ -14,14 +24,12 @@ exports.getProjects = (req, res) => {
   });
 };
  
-exports.createProject = (req, res) => {
-  const projectName = req.body.name;
-
-  Project.create({ name: projectName})
+exports.postCreateProject = (req, res) => {
+  Project.create({ name: req.body.name })
   .then(() => {
     res.status(201).send('POST complete.');
   })
   .catch(err => {
-    console.log(err)
+    console.log(err);
   });
 };
