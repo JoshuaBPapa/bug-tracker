@@ -23,9 +23,29 @@ exports.getProjects = (req, res) => {
     res.send(err);
   });
 };
+
+exports.getAProject = (req, res) => {
+  Project.findByPk(req.params.projectId, {
+    include: {
+      model: Ticket
+    }
+  })
+  .then(project => {
+    if (project) {
+      res.status(200).send(project);
+    } else {
+      res.status(204).send('No project found.');
+    }
+  })
+  .catch(err => {
+    res.send(err);
+  });
+}
  
 exports.postCreateProject = (req, res) => {
-  Project.create({ name: req.body.name })
+  const { body: { title, description } } = req;
+
+  Project.create({ title, description })
   .then(() => {
     res.status(201).send('POST complete.');
   })

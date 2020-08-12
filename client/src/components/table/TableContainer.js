@@ -27,19 +27,17 @@ const TableContainer = () => {
   let table = <p>Attempting to fetch data...</p>
   if (tableData) {
     const tableHeaders = Object.keys(tableData[0]);
-    const rows = tableData.map(row => {
-      return (
-        <tr key={row.id}>
-          {tableHeaders.map(header => (
-            <Cell
-              key={header}
-              cellname={header}
-              cellValue={row[header]}
-              rowId={row.id} />
-          ))}
-        </tr>
-      );
-    });
+    const rows = tableData.map(row => (
+      <tr key={row.id}>
+        {tableHeaders.map(header => (
+          <Cell
+            key={header}
+            cellname={header}
+            cellValue={row[header]}
+            rowId={row.id} />
+        ))}
+      </tr>
+    ));
     
     table = (
       <div className="TableContainer">

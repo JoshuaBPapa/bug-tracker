@@ -9,9 +9,9 @@ const Ticket = sequelizse.define('ticket', {
     allowNull: false,
     primaryKey: true
   },
-  priority: Sequelize.STRING(6),
-  name: Sequelize.STRING(45),
-  status: Sequelize.STRING(15)
+  priority: Sequelize.STRING,
+  title: Sequelize.STRING,
+  status: Sequelize.STRING
 });
 
 module.exports = Ticket;

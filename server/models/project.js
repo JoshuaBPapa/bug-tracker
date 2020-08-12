@@ -9,7 +9,8 @@ const Project = sequelize.define('project', {
     allowNull: false,
     primaryKey: true
   },
-  name: Sequelize.STRING(45)
+  title: Sequelize.STRING,
+  description: Sequelize.STRING
 });
  
 module.exports = Project; 

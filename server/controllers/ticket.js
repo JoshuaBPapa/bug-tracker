@@ -15,6 +15,26 @@ exports.getTickets = (req, res) => {
   })
 };
 
+exports.getATicket = (req, res) => {
+  Ticket.findByPk(
+    req.params.ticketId,
+    {
+      include: { model: Project }, 
+      attributes: { exclude: ['projectId']
+    }
+  })
+  .then(ticket => {
+    if (ticket) {
+      res.status(200).send(ticket);
+    } else {
+      res.status(204).send('No ticket found.');
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
+
 exports.postCreateTicket = (req, res) => {
   Ticket.create({ 
     name: req.body.name, 
