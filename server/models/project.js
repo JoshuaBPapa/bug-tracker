@@ -1,16 +1,31 @@
-const Sequelize = require('sequelize');
- 
-const sequelize = require('../database/database');
- 
-const Project = sequelize.define('project', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true
-  },
-  title: Sequelize.STRING,
-  description: Sequelize.STRING
-});
- 
-module.exports = Project; 
+const db = require('../database/database');
+
+module.exports = class Project {
+  constructor(title, description) {
+    this.title = title;
+    this.description = description;
+  };
+
+  create() {
+    return db.execute(
+      'INSERT INTO projects (title, description) VALUES (?, ?)',
+      [this.title, this.description]
+    );
+  };
+
+  static findAll() {
+    return db.execute(`
+      SELECT 
+        projects.id, projects.title, projects.createdAt, COUNT(tickets.projectId) AS tickets 
+      FROM 
+        projects LEFT JOIN
+        tickets ON tickets.projectId = projects.id
+      GROUP BY
+        projects.id`
+    );
+  };
+
+  static findById(id) {
+    return db.execute('SELECT * FROM projects WHERE id=' + id);
+  }
+};
