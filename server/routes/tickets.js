@@ -1,12 +1,26 @@
 const { Router } = require('express');
 
+const paginationControllers = require('../controllers/pagination');
 const ticketControllers = require('../controllers/ticket');
 
 const router = Router();
 
-router.get('/tickets', ticketControllers.getTickets);
-router.get('/tickets/ticket/:id', ticketControllers.getATicket);
+// get an individual ticket
+router.get('/tickets/ticket/:id/:orderBy', ticketControllers.getATicket);
+// get all tickets assigned to a project
+router.get(
+  '/tickets/project/:id/:orderBy/:pageNumber',
+  paginationControllers.calcPagination('tickets'),
+  ticketControllers.getProjectTickets
+);
+// get all tickets
+router.get(
+  '/tickets/:orderBy/:pageNumber', 
+  paginationControllers.calcPagination('tickets'), 
+  ticketControllers.getTickets
+);
 
-router.post('/tickets',ticketControllers.postCreateTicket);
+// post a new ticket
+router.post('/tickets', ticketControllers.postCreateTicket);
 
 module.exports = router;

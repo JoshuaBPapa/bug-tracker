@@ -16,18 +16,46 @@ module.exports = class Ticket {
     );
   };
 
-  static findAll() {
+  static findAll(orderBy, pageNumber) {
     return db.execute(
       `SELECT 
-        tickets.id, tickets.priority, tickets.title, tickets.status, projects.title as project 
+        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.created, projects.title AS project
       FROM 
         tickets, projects 
       WHERE
-        tickets.projectId=projects.id`
-      );
+        tickets.projectId = projects.id
+      ORDER BY
+        ${orderBy}
+      LIMIT
+        ${(pageNumber - 1) * 10}, 10`
+    );
   };
 
-  static findById(id) {
-    return db.execute('SELECT * FROM tickets WHERE id=' + id);
+  static findById(id, orderBy) {
+    return db.execute(
+      `SELECT
+        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.description, projects.title AS project
+      FROM
+        tickets, projects
+      WHERE
+        tickets.id = ${id} AND tickets.projectId = projects.id
+      ORDER BY
+        ${orderBy}`
+    );
+  };
+
+  static findProjectTickets(projectId, orderBy, pageNumber) {
+    return db.execute(
+      `SELECT 
+        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.created
+      FROM 
+        tickets
+      WHERE
+        tickets.projectId = ${projectId}
+      ORDER BY
+        ${orderBy}
+      LIMIT
+        ${(pageNumber - 1) * 10}, 10`
+    );
   };
 };

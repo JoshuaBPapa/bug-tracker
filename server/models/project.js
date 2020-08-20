@@ -13,19 +13,31 @@ module.exports = class Project {
     );
   };
 
-  static findAll() {
-    return db.execute(`
-      SELECT 
-        projects.id, projects.title, projects.createdAt, COUNT(tickets.projectId) AS tickets 
+  static findAll(orderBy, pageNumber) {
+    return db.execute(
+      `SELECT 
+        projects.id, projects.title, projects.created, COUNT(tickets.projectId) AS tickets
       FROM 
-        projects LEFT JOIN
+        projects 
+      LEFT JOIN
         tickets ON tickets.projectId = projects.id
       GROUP BY
-        projects.id`
+        projects.id
+      ORDER BY
+        ${orderBy}
+      LIMIT
+        ${(pageNumber - 1) * 10}, 10`
     );
   };
 
   static findById(id) {
-    return db.execute('SELECT * FROM projects WHERE id=' + id);
-  }
+    return db.execute(
+      `SELECT 
+        projects.id, projects.title, projects.description, projects.created
+      FROM 
+        projects 
+      WHERE 
+        projects.id = ${id}`
+    );
+  };
 };
