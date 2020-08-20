@@ -1,69 +1,97 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-import TableHeader from './TableHeader';
-import Cell from './Cell';
+import useFetch from '../../hooks/useFetch';
+
+import FeedbackMessage from '../FeedbackMessage/FeedbackMessage';
+import TableHeaderCell from './TableHeaderCell';
+import TableCell from './TableCell';
+import DateTime from '../DateTime/DateTime';
 import Pagination from './Pagination';
+import Priority from '../Priority/Priority';
 
-const TableContainer = () => {
-  const [tableData, setListData] = useState();
-  const [sortBy, setSortBy] = useState('created-at');
+const TableContainer = ({ contentUrl, endpoint, initOrderBy, initOrderAscending }) => {
+  const [orderBy, setOrderBy] = useState(initOrderBy);
+  const [orderAscending, setOrderAscending] = useState(initOrderAscending);
+  const [pageNumber, setPageNumber] = useState(1);
+  const {
+    data,
+    error,
+    fetchData
+  } = useFetch();
 
   useEffect(() => {
-    fetch('http://localhost:8080/projects')
-      .then(res => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        throw new Error('no projects found')
-      })
-      .then(data => {
-        setListData(data);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, []);
+    fetchData(`${endpoint}/${orderBy}-${orderAscending ? 'asc' : 'desc'}/${pageNumber}`);
+  }, [endpoint, orderBy, orderAscending, fetchData, pageNumber]);
 
-  let table = <p>Attempting to fetch data...</p>
-  if (tableData) {
-    const tableHeaders = Object.keys(tableData[0]);
-    const rows = tableData.map(row => (
-      <tr key={row.id}>
-        {tableHeaders.map(header => (
-          <Cell
-            key={header}
-            cellname={header}
-            cellValue={row[header]}
-            rowId={row.id} />
-        ))}
-      </tr>
-    ));
-    
+  const handleHeaderCellClick = (header) => {
+    if (orderBy === header) {
+      setOrderAscending(!orderAscending);
+    } else {
+      setOrderBy(header);
+      setOrderAscending(true)
+    }
+    setPageNumber(1);
+  };
+  
+  let table = <p>loading...</p>;
+  if (error) {
     table = (
-      <div className="TableContainer">
+      <FeedbackMessage>
+        {error.message}
+      </FeedbackMessage>
+    );
+  } else if (data) {
+    const headers = Object.keys(data.results[0]);
+
+    table = (
+      <div className="Table-Container">
         <table>
           <thead>
             <tr>
-              {tableHeaders.map(header => (
-                <TableHeader
-                  key={header}
-                  header={header}
-                  click={() => setSortBy(header)} />
-              ))}
+              {headers.map(header => {
+                let props = {
+                  key: header,
+                  header: header,
+                  clicked: handleHeaderCellClick
+                }
+                if (header === orderBy) {
+                  props.activeClassName = `active ${orderAscending ? 'asc' : 'desc'}`
+                }
+                return <TableHeaderCell {...props} />
+              })}
             </tr>
           </thead>
           <tbody>
-            {rows}
+            {data.results.map(row => (
+              <tr key={row.id}>
+                {headers.map(header => (
+                  <TableCell key={header}>
+                    {/* format cell data depending on its type */}
+                    {header === 'title' ? (
+                      <Link to={`${contentUrl}/${row.id}`}>
+                        {row[header]}
+                      </Link>
+                    ) : header === 'created' || header === 'updated' ? (
+                      <DateTime value={row[header]} />
+                    ) : header === 'priority' ? (
+                      <Priority value={row.priority} />
+                    ) : row[header]}
+                  </TableCell>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
-        <Pagination />
+        <Pagination 
+          pageNumber={pageNumber}
+          totalPageCount={data.totalPages} 
+          totalResults={data.totalResults}
+          clicked={setPageNumber} />
       </div>
-    );
+    )
   };
-
-  return (
-    table
-  );
+  return table;
 };
 
 export default TableContainer;
