@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import TableContainer from '../../DataTable/TableContainer';
+import TableContainer from '../../Table/TableContainer';
 
 const Tickets = () => (
   <div>

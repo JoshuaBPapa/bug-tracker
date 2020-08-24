@@ -7,15 +7,15 @@ import Card from '../../Card/Card';
 import Priority from '../../Priority/Priority';
 import DateTime from '../../DateTime/DateTime';
 
-import useFetch from '../../../hooks/useFetch';
+import useAxios from '../../../hooks/useAxios';
 
 const Ticket = ({ match }) => {
-  const { data, error, sendRequest } = useFetch();
   const { id } = match.params;
+  const { data, error, getData } = useAxios();
 
   useEffect(() => {
-    sendRequest('tickets/ticket/' + id);
-  }, [sendRequest, id]);
+    getData(`tickets/ticket/${id}`)
+  }, [getData, id]);
 
   let ticket = <p>Loading...</p>;
   if (error) {

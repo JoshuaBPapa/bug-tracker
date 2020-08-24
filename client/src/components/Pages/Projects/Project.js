@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import TableContainer from '../../DataTable/TableContainer';
+import TableContainer from '../../Table/TableContainer';
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 
-import useFetch from '../../../hooks/useFetch';
+import useAxios from '../../../hooks/useAxios';
 
 const Project = ({ match }) => {
-  const { data, error, sendRequest } = useFetch();
   const { id } = match.params;
+  const { data, error, getData } = useAxios();
 
   useEffect(() => {
-    sendRequest('projects/project/' + id);
-  }, [sendRequest, id])
+    getData(`/projects/project/${id}`);
+  }, [getData, id])
 
   let project = <p>Loading...</p>;
   if (error) {
@@ -30,14 +30,14 @@ const Project = ({ match }) => {
         {data.description}
         <div>
           tickets
-        <TableContainer
+          <TableContainer
             contentUrl="/tickets/ticket"
             endpoint={`tickets/project/${id}`}
             initOrderBy="created"
             initIsOrderAscending={false} />
         </div>
       </div>
-    )
+    );
   };
 
   return project;
