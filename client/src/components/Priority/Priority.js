@@ -1,28 +1,33 @@
 import React from 'react';
 
-const Priority = ({ value }) => {
-  let priorityString;
-  console.log(value)
+const Priority = ({ value, isOption }) => {
+  let priority;
   switch (value) {
     case 1:
-      priorityString = 'severe';
+      priority = 'severe';
       break;
     case 2:
-      priorityString = 'high';
+      priority = 'high';
       break;
     case 3:
-      priorityString = 'moderate';
+      priority = 'moderate';
       break;
     case 4:
-      priorityString = 'low';
+      priority = 'low';
       break;
     default:
-      priorityString = 'n/a';
+      priority = 'n/a';
   };
   
-  return (
-    <span>{priorityString}</span>
-  );
+  if (isOption) {
+    return (
+      <option value={value}>
+        {priority}
+      </option>
+    );
+  } else {
+    return priority;
+  };
 };
 
 export default Priority;
