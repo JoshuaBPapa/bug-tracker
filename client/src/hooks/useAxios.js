@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useEffect } from 'react';
+import { useReducer, useCallback, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const fetchReducer = (state, action) => {
@@ -32,20 +32,23 @@ const useAxios = () => {
     data: null,
     error: null
   });
+  const cancelToken = useRef(null);
   axios.defaults.baseURL = 'http://localhost:8080';
 
   useEffect(() => {
-    const source = axios.CancelToken.source();
+    cancelToken.current = axios.CancelToken.source() 
 
     return () => {
-      source.cancel('component was unmounted')
+      if (cancelToken.current) {
+        cancelToken.current.cancel()
+      }
     };
-  });
+  }, []);
 
   const getData = useCallback(endpoint => {
     dispatch({ type: 'REQUEST_INIT' });
 
-    axios.get(endpoint)
+    axios.get(endpoint, { cancelToken: cancelToken.current.token })
       .then(res => {
         dispatch(
           {
@@ -65,12 +68,15 @@ const useAxios = () => {
   }, []);
 
   const sendData = useCallback((endpoint, method, formData) => {
+    dispatch({ type: 'REQUEST_INIT' });
+
     axios(
       {
         method: method,
         url: endpoint,
         data: formData
-      }
+      },
+      { cancelToken: cancelToken.current.token }
     )
       .then(res => {
         dispatch(
@@ -84,7 +90,7 @@ const useAxios = () => {
         dispatch(
           {
             type: 'REQUEST_FAIL',
-            payload: err.response.data.errors
+            payload: err.response.data
           }
         )
       });
