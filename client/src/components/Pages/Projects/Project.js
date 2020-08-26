@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import TableContainer from '../../Table/TableContainer';
@@ -28,6 +29,12 @@ const Project = ({ match }) => {
           {data.title}
         </PageTitle>
         {data.description}
+        <Link to={`/tickets/create/${id}`}>
+          Add a new ticket
+        </Link>
+        <Link to={`/projects/project/${id}/edit`}>
+          Edit
+        </Link>
         <div>
           tickets
           <TableContainer

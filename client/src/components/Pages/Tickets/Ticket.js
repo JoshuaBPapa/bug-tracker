@@ -6,6 +6,7 @@ import PageTitle from '../../PageTitle/PageTitle';
 import Card from '../../Card/Card';
 import Priority from '../../Priority/Priority';
 import DateTime from '../../DateTime/DateTime';
+import Status from '../../Status/Status';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -30,6 +31,9 @@ const Ticket = ({ match }) => {
         <PageTitle>
           ticket id: {data.id}
         </PageTitle>
+        <Link to={`/tickets/ticket/${id}/edit`}>
+          edit
+        </Link>
         <Card header={data.title} />
         <Card header="description">
           {data.description}
@@ -43,7 +47,7 @@ const Ticket = ({ match }) => {
           <DateTime value={data.created} />
         </Card>
         <Card header="status">
-          {data.status}
+          <Status value={data.status} />
         </Card>
         <Card header="priority">
           <Priority value={data.priority} />
