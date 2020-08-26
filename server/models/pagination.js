@@ -10,7 +10,7 @@ module.exports = class Pagination {
       ${foreignTable ?
         `WHERE
           ${table}.${foreignTable}Id = ${foreignId}`
-        : null}`
+        : ''}`
     );
   };
 };

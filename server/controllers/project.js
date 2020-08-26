@@ -23,7 +23,7 @@ exports.getAProject = (req, res) => {
       res.status(200).send(project[0][0]);
     })
     .catch(err => {
-      console.log(err);
+      console.log(err)
     });
 };
 
@@ -33,10 +33,25 @@ exports.postCreateProject = (req, res) => {
     req.body.description
   );
   newProject.create()
-    .then(() => {
-      res.status(201).send("POST complete")
+    .then(project => {
+      res.status(201).json({ id: project[0].insertId });
     })
     .catch(err => {
       console.log(err)
     });
 };
+
+exports.putUpdateProject = (req, res) => {
+  const { editId } = req.params;
+  Project.update(
+    editId,
+    req.body.title,
+    req.body.description
+  )
+    .then(() => {
+      res.status(200).json({ id: editId });
+    })
+    .catch(err => {
+      console.log(err)
+    });
+}

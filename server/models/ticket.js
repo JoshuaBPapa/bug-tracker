@@ -16,6 +16,17 @@ module.exports = class Ticket {
     );
   };
 
+  static update(editId, title, description, status, priority) {
+    return db.execute(
+      `UPDATE
+        tickets
+      SET
+        title = "${title}", description = "${description}", status = "${status}", priority = "${priority}"
+      WHERE
+        id = ${editId}`
+    );
+  };
+
   static findAll(orderBy, pageNumber) {
     return db.execute(
       `SELECT 
@@ -31,16 +42,14 @@ module.exports = class Ticket {
     );
   };
 
-  static findById(id, orderBy) {
+  static findById(id) {
     return db.execute(
       `SELECT
-        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.description, projects.title AS project
+        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.description, tickets.created, tickets.projectId, projects.title AS projectTitle
       FROM
         tickets, projects
       WHERE
-        tickets.id = ${id} AND tickets.projectId = projects.id
-      ORDER BY
-        ${orderBy}`
+        tickets.id = ${id} AND tickets.projectId = projects.id`
     );
   };
 

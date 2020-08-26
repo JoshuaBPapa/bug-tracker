@@ -13,6 +13,17 @@ module.exports = class Project {
     );
   };
 
+  static update(editId, title, description) {
+    return db.execute(
+      `UPDATE 
+        projects
+      SET
+        title = "${title}", description = "${description}"
+      WHERE
+        id = ${editId}`
+    );
+  };
+
   static findAll(orderBy, pageNumber) {
     return db.execute(
       `SELECT 
