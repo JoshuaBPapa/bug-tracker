@@ -1,49 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import useFetch from '../../hooks/useFetch';
-
 import FeedbackMessage from '../FeedbackMessage/FeedbackMessage';
 import TableHeaderCell from './TableHeaderCell';
 import TableCell from './TableCell';
 import DateTime from '../DateTime/DateTime';
 import Pagination from './Pagination';
 import Priority from '../Priority/Priority';
+import Status from '../Status/Status';
 
-const TableContainer = ({ contentUrl, endpoint, initOrderBy, initOrderAscending }) => {
+import useAxios from '../../hooks/useAxios';
+
+const TableContainer = ({ contentUrl, endpoint, initOrderBy, initIsOrderAscending }) => {
   const [orderBy, setOrderBy] = useState(initOrderBy);
-  const [orderAscending, setOrderAscending] = useState(initOrderAscending);
+  const [isOrderAscending, setIsOrderAscending] = useState(initIsOrderAscending);
   const [pageNumber, setPageNumber] = useState(1);
-  const {
-    data,
-    error,
-    fetchData
-  } = useFetch();
+  const { data, error, getData } = useAxios();
 
   useEffect(() => {
-    fetchData(`${endpoint}/${orderBy}-${orderAscending ? 'asc' : 'desc'}/${pageNumber}`);
-  }, [endpoint, orderBy, orderAscending, fetchData, pageNumber]);
+    getData(`${endpoint}/${orderBy}-${isOrderAscending ? 'asc' : 'desc'}/${pageNumber}`);
+  }, [endpoint, orderBy, isOrderAscending, getData, pageNumber]);
 
   const handleHeaderCellClick = (header) => {
     if (orderBy === header) {
-      setOrderAscending(!orderAscending);
+      setIsOrderAscending(!isOrderAscending);
     } else {
       setOrderBy(header);
-      setOrderAscending(true)
+      setIsOrderAscending(true)
     }
     setPageNumber(1);
   };
-  
+
   let table = <p>loading...</p>;
   if (error) {
     table = (
       <FeedbackMessage>
-        {error.message}
+        {error}
       </FeedbackMessage>
     );
   } else if (data) {
-    const headers = Object.keys(data.results[0]);
-
+    const headers = Object.keys(data.results[0] || data.results);
     table = (
       <div className="Table-Container">
         <table>
@@ -56,7 +52,7 @@ const TableContainer = ({ contentUrl, endpoint, initOrderBy, initOrderAscending 
                   clicked: handleHeaderCellClick
                 }
                 if (header === orderBy) {
-                  props.activeClassName = `active ${orderAscending ? 'asc' : 'desc'}`
+                  props.activeClassName = `active ${isOrderAscending ? 'asc' : 'desc'}`
                 }
                 return <TableHeaderCell {...props} />
               })}
@@ -67,15 +63,17 @@ const TableContainer = ({ contentUrl, endpoint, initOrderBy, initOrderAscending 
               <tr key={row.id}>
                 {headers.map(header => (
                   <TableCell key={header}>
-                    {/* format cell data depending on its type */}
+                    {/* format cell data depending on its header */}
                     {header === 'title' ? (
                       <Link to={`${contentUrl}/${row.id}`}>
-                        {row[header]}
+                        {row.title}
                       </Link>
                     ) : header === 'created' || header === 'updated' ? (
                       <DateTime value={row[header]} />
                     ) : header === 'priority' ? (
                       <Priority value={row.priority} />
+                    ) : header === 'status' ? (
+                      <Status value={row[header]} />
                     ) : row[header]}
                   </TableCell>
                 ))}

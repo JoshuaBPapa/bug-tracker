@@ -25,10 +25,12 @@ const UpsertFormContainer = ({ formFields, dbTable, editId, assignedProjectId })
 
   const handleSubmit = e => {
     e.preventDefault();
-    
+
+    // editing an item
     if (editId) {
       sendData(`${dbTable}s/${editId}`, 'PUT', formData)
     } else {
+      // creating a new item
       if (dbTable === 'ticket') {
         sendData(`tickets/${assignedProjectId}`, 'POST', formData);
       } else if (dbTable === 'project') {
@@ -47,6 +49,11 @@ const UpsertFormContainer = ({ formFields, dbTable, editId, assignedProjectId })
     });
   };
 
+  let validationErrors;
+  if (error) {
+    validationErrors = error.validationErrors
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -58,7 +65,7 @@ const UpsertFormContainer = ({ formFields, dbTable, editId, assignedProjectId })
               value={formData[field.name]}
               changed={handleChange}
               options={field.options} />
-            {error ? error.validationErrors.map(valErr => (
+            {validationErrors ? validationErrors.map(valErr => (
               valErr.param === field.name ? (
                 <ValidationError key={valErr.param} msg={valErr.msg} />
               ) : null
@@ -67,6 +74,22 @@ const UpsertFormContainer = ({ formFields, dbTable, editId, assignedProjectId })
         ))}
         <button type="submit">SUBMIT</button>
         {loading ? <p>Loading...</p> : null}
+        {error && !validationErrors ? (
+          <div>
+            <p>There was an error when trying to submit:</p>
+            <p>{error}</p>
+          </div>
+        ) : null}
+        {validationErrors ? (
+          <div>
+            Please review the following fields:
+            <ul>
+              {validationErrors.map(valErr => (
+                <li key={valErr.param}>{valErr.param}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </form>
     </div>
   );

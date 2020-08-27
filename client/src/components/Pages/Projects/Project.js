@@ -19,7 +19,7 @@ const Project = ({ match }) => {
   if (error) {
     project = (
       <FeedbackMessage>
-        {error.message}
+        {error}
       </FeedbackMessage>
     );
   } else if (data) {

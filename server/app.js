@@ -18,4 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(projectRoutes);
 app.use(ticketRoutes);
 
+app.use((err, req, res, next) => {
+  res.status(500).send('Server-side error. Please check if the entered API endpoint is correct or try again later.');
+});
+
 app.listen(process.env.SERVER_PORT);

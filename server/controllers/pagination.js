@@ -7,7 +7,7 @@ exports.calcPagination = table => {
     let foreignTable = 'project';
     if (!foreignId) foreignTable = null;
 
-    // a foreign table needs to be passed as a singular to the getTotalRowCount method. For example: project or ticket
+    // a foreign table needs to be passed as a singular to the getTotalRowCount method. For example: project
     Pagination.getTotalRowCount(table, foreignTable, foreignId)
       .then(count => {
         const totalRows = count[0][0].totalRows;
@@ -19,7 +19,6 @@ exports.calcPagination = table => {
         next();
       })
       .catch(err => {
-        console.log(err);
         next(err);
       })
   }

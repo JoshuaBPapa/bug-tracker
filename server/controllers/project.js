@@ -1,10 +1,13 @@
 const Project = require('../models/project');
 
-exports.getProjects = (req, res) => {
+exports.getProjects = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
   const { totalPageCount, totalRows, pageNumber } = res.locals;
   Project.findAll(orderBy, pageNumber)
     .then(projects => {
+      if (!projects[0].length) {
+        return res.status(404).send('No Projects.');
+      };
       res.status(200).send({
         results: projects[0],
         totalPages: totalPageCount,
@@ -12,22 +15,25 @@ exports.getProjects = (req, res) => {
       });
     })
     .catch(err => {
-      console.log(err)
+      next(err);
     });
 };
 
-exports.getAProject = (req, res) => {
+exports.getAProject = (req, res, next) => {
   const { id } = req.params;
   Project.findById(id)
     .then(project => {
+      if (!project[0].length) {
+        return res.status(404).send('Project not found.');
+      };
       res.status(200).send(project[0][0]);
     })
     .catch(err => {
-      console.log(err)
+      next(err);
     });
 };
 
-exports.postCreateProject = (req, res) => {
+exports.postCreateProject = (req, res, next) => {
   const newProject = new Project(
     req.body.title,
     req.body.description
@@ -37,11 +43,11 @@ exports.postCreateProject = (req, res) => {
       res.status(201).json({ id: project[0].insertId });
     })
     .catch(err => {
-      console.log(err)
+      next(err);
     });
 };
 
-exports.putUpdateProject = (req, res) => {
+exports.putUpdateProject = (req, res, next) => {
   const { editId } = req.params;
   Project.update(
     editId,
@@ -52,6 +58,6 @@ exports.putUpdateProject = (req, res) => {
       res.status(200).json({ id: editId });
     })
     .catch(err => {
-      console.log(err)
+      next(err);
     });
 }

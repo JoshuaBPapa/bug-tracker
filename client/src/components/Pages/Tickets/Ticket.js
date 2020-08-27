@@ -22,7 +22,7 @@ const Ticket = ({ match }) => {
   if (error) {
     ticket = (
       <FeedbackMessage>
-        {error.message}
+        {error}
       </FeedbackMessage>
     );
   } else if (data) {

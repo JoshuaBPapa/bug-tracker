@@ -61,7 +61,7 @@ const useAxios = () => {
         dispatch(
           {
             type: 'REQUEST_FAIL',
-            payload: err
+            payload: err.response.data
           }
         );
       });

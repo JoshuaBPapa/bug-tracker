@@ -58,7 +58,7 @@ const TicketUpsertForm = ({ match }) => {
     } else if (error) {
       return (
         <FeedbackMessage>
-          {error.message}
+          {error}
         </FeedbackMessage>
       );
     } else if (data) {
