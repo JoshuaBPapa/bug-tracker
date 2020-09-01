@@ -1,0 +1,148 @@
+$headerTransitionSpeed: 0.3s;
+
+.Header-Container {  
+  background-color: $primaryColour;
+  height: 50px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+
+  .Hamburger-Button {
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50px;
+    z-index: 3;
+
+    span {
+      background-color: white;
+      display: block;
+      height: 3px;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      transition: all $headerTransitionSpeed linear;
+      width: 32px;
+
+      &:nth-of-type(1) {
+        top: 30%;
+      }
+
+      &:nth-of-type(2) {
+        top: 50%;
+      }
+
+      &:nth-of-type(3) {
+        top: 70%;
+      }
+    }
+  }
+
+  .header-content {
+    background-color: $primaryColour;
+    height: 100vh;
+    left: -15em - 1.35em;  // left = -width - (padding right + padding left)
+    padding: 0 0.625em;
+    padding-top: 3.75em;
+    position: fixed;
+    top: 0;
+    transition: left $headerTransitionSpeed linear;
+    width: 15em;
+    z-index: 2;
+
+    nav {
+      ul {
+        li {
+          a {
+            border-bottom: 1px solid white;
+            color: white;
+            display: block;
+            padding: 0.625em 0;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+
+  &.open {
+    .Hamburger-Button {
+      span {
+        &:nth-of-type(1) {
+          top: 50%;
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+  
+        &:nth-of-type(2) {
+          opacity: 0;
+        }
+  
+        &:nth-of-type(3) {
+          top: 50%;
+          transform: translate(-50%, -50%) rotate(45deg);
+        }  
+      }
+    }
+
+    .header-content {
+      left: 0;
+    }
+  }
+
+  @media (min-width: $lgBreak) {
+    .Hamburger-Button {
+      display: none;
+    }
+
+    .header-content {
+      height: 100%;
+      padding: 0 0.625em;
+      padding-top: 0;
+      position: static;
+      width: 100%;
+
+      nav {
+        ul {
+          li {
+            display: inline-block;
+
+            a {
+              border-bottom: none;
+              display: inline-block;
+              line-height: 50px;
+              padding: 0 0.625em;
+              position: relative;
+
+              &::after {
+                background-color: white;
+                content: '';
+                display: block;
+                height: 20px;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1px;
+              }
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+
+            &:last-of-type {
+              a {
+                &::after {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

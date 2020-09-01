@@ -7,6 +7,12 @@
 body {
   background-color: $bgWhite;
   font-family: 'Open Sans', sans-serif;
+  width: 100%;
+
+  &.mobile-nav-scroll-lock {
+    overflow-y: hidden;
+		position: fixed;
+  }
 }
 
 button {
@@ -14,4 +20,12 @@ button {
   border: none;
   cursor: pointer;
   font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
 }

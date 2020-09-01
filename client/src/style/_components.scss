@@ -1,2 +1,8 @@
-// --- Table Container --- //
-@import '../components/Table/_TableContainer.scss';
+// --- Header --- //
+@import '../components/Header/_Header.scss';
+
+// --- Table --- //
+@import '../components/Table/_Table.scss';
+
+// --- Dark Overlay --- //
+@import '../components//DarkOverlay/DarkOverlay.scss';
