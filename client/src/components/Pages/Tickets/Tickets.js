@@ -1,18 +1,14 @@
 import React from 'react';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import TableContainer from '../../Table/TableContainer';
+import TicketsTable from '../../Table/TicketsTable/TicketsTable';
 
 const Tickets = () => (
   <div>
     <PageTitle>
       tickets
     </PageTitle>
-    <TableContainer
-      contentUrl="/tickets/ticket" 
-      endpoint="tickets"
-      initOrderBy="created" 
-      initIsOrderAscending={false} />
+    <TicketsTable ticketsAssignment={''} />
   </div>
 );
 

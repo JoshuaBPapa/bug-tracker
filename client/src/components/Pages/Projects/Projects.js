@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import TableContainer from '../../Table/TableContainer';
+import ProjectsTable from '../../Table/ProjectsTable/ProjectsTable';
 
 const Projects = () => (
   <div>
@@ -12,11 +12,7 @@ const Projects = () => (
     <Link to="/projects/create">
       Add a new project
     </Link>
-    <TableContainer 
-      contentUrl="/projects/project" 
-      endpoint="projects" 
-      initOrderBy="id"
-      initIsOrderAscending={true} />
+    <ProjectsTable />
   </div>
 );
 

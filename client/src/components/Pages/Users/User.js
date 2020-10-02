@@ -1,48 +1,41 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import PageTitle from '../../PageTitle/PageTitle';
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
 
 import useAxios from '../../../hooks/useAxios';
 
-const Project = ({ match }) => {
+const User = ({ match }) => {
   const { id } = match.params;
   const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {
-    sendRequest('GET', `/projects/project/${id}`);
+    sendRequest('GET', `users/user/${id}`);
   }, [sendRequest, id]);
 
-  let project = <p>Loading...</p>;
+  let user = <p>Loading...</p>;
   if (error) {
-    project = (
+    user = (
       <FeedbackMessage>
         {error}
       </FeedbackMessage>
     );
   } else if (data) {
-   project = (
+    user = (
       <div>
-        <PageTitle>
-          {data.title}
-        </PageTitle>
-        {data.description}
-        <Link to={`/tickets/create/${id}`}>
-          Add a new ticket
+        <Link to={`/users/user/${id}/edit`}>
+          edit user
         </Link>
-        <Link to={`/projects/project/${id}/edit`}>
-          Edit
+        <Link to={`/users/user/${id}/new_password`}>
+          change user's password
         </Link>
-        <div>
-          <TicketsTable ticketsAssignment={`/project/${id}`} />
-        </div>
+        <TicketsTable ticketsAssignment={`/user/${id}`} />
       </div>
     );
   }
 
-  return project;
+  return user;
 };
 
-export default Project;
+export default User;

@@ -12,11 +12,11 @@ import useAxios from '../../../hooks/useAxios';
 
 const Ticket = ({ match }) => {
   const { id } = match.params;
-  const { data, error, getData } = useAxios();
+  const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {
-    getData(`tickets/ticket/${id}`)
-  }, [getData, id]);
+    sendRequest('GET', `tickets/ticket/${id}`)
+  }, [sendRequest, id]);
 
   let ticket = <p>Loading...</p>;
   if (error) {
