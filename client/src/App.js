@@ -1,21 +1,22 @@
-import React from 'react';
-import { Switch } from 'react-router-dom';
+import React, { useContext } from 'react';
 
 import HeaderContainer from './components/Header/HeaderContainer';
-import ProjectRoutes from './routes/ProjectRoutes';
-import TicketRoutes from './routes/TicketRoutes';
+import Routes from './Routes';
+
+import { AuthContext } from './AuthContext';
 
 import './style/main.scss';
 
 function App() {
+  const authContext = useContext(AuthContext);
+  
   return (
-    <>
-      <HeaderContainer />
-      <Switch>
-        <ProjectRoutes />
-        <TicketRoutes />
-      </Switch>
-    </>
+    <div className="App">
+      {authContext.isAuth ? <HeaderContainer /> : null}
+      <main>
+        <Routes />
+      </main>
+    </div>
   );
 };
 
