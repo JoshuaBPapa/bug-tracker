@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const paginationControllers = require('../controllers/pagination');
 const ticketControllers = require('../controllers/ticket');
-const validationChecks = require('../middleware/validation');
+const validation = require('../middleware/validation');
 
 const router = Router();
 
@@ -10,9 +10,15 @@ const router = Router();
 router.get('/tickets/ticket/:id', ticketControllers.getATicket);
 // GET all tickets assigned to a project
 router.get(
-  '/tickets/project/:id/:orderBy/:pageNumber',
-  paginationControllers.calcPagination('tickets'),
+  '/tickets/project/:parentId/:orderBy/:pageNumber',
+  paginationControllers.calcPagination('tickets', 'project'),
   ticketControllers.getProjectTickets
+);
+// GET all tickets assigned to a user
+router.get(
+  '/tickets/user/:parentId/:orderBy/:pageNumber',
+  paginationControllers.calcPagination('tickets', 'user'),
+  ticketControllers.getUserTickets
 );
 // GET all tickets
 router.get(
@@ -24,14 +30,14 @@ router.get(
 // POST a new ticket
 router.post(
   '/tickets/:assignedProjectId',
-  validationChecks.validateTicket,
+  validation.validateTicket,
   ticketControllers.postCreateTicket
 );
 
 // PUT a ticket
 router.put(
-  '/tickets/:editId',
-  validationChecks.validateTicket,
+  '/tickets/ticket/:editId',
+  validation.validateTicket,
   ticketControllers.putUpdateTicket
 );
 

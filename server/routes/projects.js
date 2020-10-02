@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const paginationControllers = require('../controllers/pagination');
 const projectControllers = require('../controllers/project');
-const validationChecks = require('../middleware/validation');
+const validation = require('../middleware/validation');
 
 const router = Router();
 
@@ -17,13 +17,13 @@ router.get(
 
 // POST a new project
 router.post('/projects',
-  validationChecks.validateProject,
+  validation.validateProject,
   projectControllers.postCreateProject
 );
 
 // PUT a project
-router.put('/projects/:editId',
-  validationChecks.validateProject,
+router.put('/projects/project/:editId',
+  validation.validateProject,
   projectControllers.putUpdateProject
 );
 

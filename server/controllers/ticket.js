@@ -2,17 +2,21 @@ const Ticket = require('../models/ticket');
 
 exports.getTickets = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
-  const { totalPageCount, totalRows, pageNumber } = res.locals;
-  Ticket.findAll(orderBy, pageNumber)
+
+  Ticket.findAll(orderBy, req.pageNumber, req.teamId)
     .then(tickets => {
       if (!tickets[0].length) {
-        return res.status(404).send('No Tickets.');
-      };
+        const error = new Error;
+        error.message = 'No tickets found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
       res.status(200).send({
         results: tickets[0],
-        totalPages: totalPageCount,
-        totalResults: totalRows
-      })
+        totalPages: req.totalPageCount,
+        totalResults: req.totalRows
+      });
     })
     .catch(err => {
       next(err);
@@ -20,11 +24,15 @@ exports.getTickets = (req, res, next) => {
 };
 
 exports.getATicket = (req, res, next) => {
-  Ticket.findById(req.params.id)
+  Ticket.findById(req.params.id, req.teamId)
     .then(ticket => {
       if (!ticket[0].length) {
-        return res.status(404).send('Ticket not found.');
-      };
+        const error = new Error;
+        error.message = 'Ticket not found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
       res.status(200).send(ticket[0][0]);
     })
     .catch(err => {
@@ -34,18 +42,44 @@ exports.getATicket = (req, res, next) => {
 
 exports.getProjectTickets = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
-  const { id } = req.params;
-  const { totalPageCount, totalRows, pageNumber } = res.locals;
-  Ticket.findProjectTickets(id, orderBy, pageNumber)
+
+  Ticket.findProjectTickets(req.params.parentId, orderBy, req.pageNumber, req.teamId)
     .then(tickets => {
       if (!tickets[0].length) {
-        return res.status(404).send('No Tickets.');
-      };
+        const error = new Error;
+        error.message = 'No tickets found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
       res.status(200).send({
         results: tickets[0],
-        totalPages: totalPageCount,
-        totalResults: totalRows
-      })
+        totalPages: req.totalPageCount,
+        totalResults: req.totalRows
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+exports.getUserTickets = (req, res, next) => {
+  const orderBy = req.params.orderBy.replace("-", " ");
+
+  Ticket.findUserTickets(req.params.parentId, orderBy, req.pageNumber, req.teamId)
+    .then(tickets => {
+      if (!tickets[0].length) {
+        const error = new Error;
+        error.message = 'No tickets found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
+      res.status(200).send({
+        results: tickets[0],
+        totalPages: req.totalPageCount,
+        totalResults: req.totalRows
+      });
     })
     .catch(err => {
       next(err);
@@ -58,8 +92,11 @@ exports.postCreateTicket = (req, res, next) => {
     req.body.title,
     req.body.status,
     req.body.description,
-    req.params.assignedProjectId
+    req.params.assignedProjectId,
+    req.userId,
+    req.teamId
   );
+
   newTicket.create()
     .then(ticket => {
       res.status(201).json({ id: ticket[0].insertId });
@@ -71,12 +108,14 @@ exports.postCreateTicket = (req, res, next) => {
 
 exports.putUpdateTicket = (req, res, next) => {
   const { editId } = req.params;
+  
   Ticket.update(
     editId,
     req.body.title,
     req.body.description,
     req.body.status,
-    req.body.priority
+    req.body.priority,
+    req.teamId
   )
     .then(() => {
       res.status(200).json({ id: editId });

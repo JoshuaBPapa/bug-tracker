@@ -2,16 +2,20 @@ const Project = require('../models/project');
 
 exports.getProjects = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
-  const { totalPageCount, totalRows, pageNumber } = res.locals;
-  Project.findAll(orderBy, pageNumber)
+
+  Project.findAll(orderBy, req.pageNumber, req.teamId)
     .then(projects => {
       if (!projects[0].length) {
-        return res.status(404).send('No Projects.');
-      };
+        const error = new Error;
+        error.message = 'No projects found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
       res.status(200).send({
         results: projects[0],
-        totalPages: totalPageCount,
-        totalResults: totalRows
+        totalPages: req.totalPageCount,
+        totalResults: req.totalRows
       });
     })
     .catch(err => {
@@ -20,12 +24,15 @@ exports.getProjects = (req, res, next) => {
 };
 
 exports.getAProject = (req, res, next) => {
-  const { id } = req.params;
-  Project.findById(id)
+  Project.findById(req.params.id, req.teamId)
     .then(project => {
       if (!project[0].length) {
-        return res.status(404).send('Project not found.');
-      };
+        const error = new Error;
+        error.message = 'Project not found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
       res.status(200).send(project[0][0]);
     })
     .catch(err => {
@@ -36,8 +43,10 @@ exports.getAProject = (req, res, next) => {
 exports.postCreateProject = (req, res, next) => {
   const newProject = new Project(
     req.body.title,
-    req.body.description
+    req.body.description,
+    req.teamId
   );
+
   newProject.create()
     .then(project => {
       res.status(201).json({ id: project[0].insertId });
@@ -49,10 +58,12 @@ exports.postCreateProject = (req, res, next) => {
 
 exports.putUpdateProject = (req, res, next) => {
   const { editId } = req.params;
+  
   Project.update(
     editId,
     req.body.title,
-    req.body.description
+    req.body.description,
+    req.teamId
   )
     .then(() => {
       res.status(200).json({ id: editId });
@@ -60,4 +71,4 @@ exports.putUpdateProject = (req, res, next) => {
     .catch(err => {
       next(err);
     });
-}
+};

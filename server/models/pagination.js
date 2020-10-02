@@ -1,16 +1,18 @@
 const db = require('../database/database');
 
 module.exports = class Pagination {
-  static getTotalRowCount(table, foreignTable, foreignId) {
+  // The WHERE filter changes depending on if there is a parentTable present
+  static getTotalRowCount(table, parentTable, parentId, teamId) {
     return db.execute(
       `SELECT
         COUNT(*) AS totalRows
       FROM
         ${table}
-      ${foreignTable ?
+      ${parentTable ? 
         `WHERE
-          ${table}.${foreignTable}Id = ${foreignId}`
-        : ''}`
+          ${table}.${parentTable}Id = ${parentId} AND ${table}.teamId = ${teamId}`
+        : `WHERE
+          ${table}.teamId = ${teamId}`}`
     );
   };
 };
