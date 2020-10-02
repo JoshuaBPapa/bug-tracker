@@ -1,9 +1,9 @@
 import React from 'react';
 
-const TableHeaderCell = ({ header, clicked, activeClassName }) => (
-  <th>
-    <button className={activeClassName} onClick={() => clicked(header)}>
-      {header}
+const TableHeaderCell = ({ clicked, activeClassName, cellProps }) => (
+  <th className={activeClassName}>
+    <button onClick={() => clicked(cellProps.key)}>
+      {cellProps.text}
     </button>
   </th>
 );

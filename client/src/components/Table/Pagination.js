@@ -1,13 +1,17 @@
 import React from 'react';
 
 const Pagination = ({ pageNumber, totalPageCount, totalResults, clicked }) => (
-  <div>
+  <div className="Pagination">
     {pageNumber > 1 ? (
-      <button onClick={() => clicked(() => pageNumber - 1)}>previous</button>
+      <button onClick={() => clicked(() => pageNumber - 1)}>
+        previous
+      </button>
     ) : null}
-    <span>page {pageNumber} out of {totalPageCount} | {totalResults} results </span>
+    <span>page {pageNumber} out of {totalPageCount} | {totalResults} results</span>
     {pageNumber < totalPageCount ? (
-      <button onClick={() => clicked(() => pageNumber + 1)}>next</button>
+      <button onClick={() => clicked(() => pageNumber + 1)}>
+        next
+      </button>
     ) : null}
   </div>
 );
