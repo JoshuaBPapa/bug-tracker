@@ -52,7 +52,7 @@ exports.signUp = (req, res, next) => {
         'x-userid': userId
       })
         .status(201)
-        .send('Sign in successful.');
+        .send('Sign up successful.');
     })
     .catch(err => {
       next(err);

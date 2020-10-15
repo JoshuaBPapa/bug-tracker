@@ -22,4 +22,13 @@ module.exports = class Team {
         teams.teamName = "${teamName}"`
     );
   };
+
+  static deleteTeam(teamId)  {
+    return db.execute(
+      `DELETE FROM
+        teams
+      WHERE
+        teams.id = ${teamId}`
+    );
+  };
 };

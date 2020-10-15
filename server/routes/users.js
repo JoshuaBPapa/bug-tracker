@@ -2,38 +2,53 @@ const { Router } = require('express');
 
 const paginationControllers = require('../controllers/pagination');
 const userControllers = require('../controllers/user');
-const validation = require('../middleware/validation');
+const authorisationMiddleware = require('../middleware/authorisation');
+const validationMiddleware = require('../middleware/validation');
 
 const router = Router();
 
 // GET an individual user
-router.get('/users/user/:id', userControllers.getAUser);
-// GET all users
+router.get('/users/user/:userId', userControllers.getAUser);
+// GET all users with pagination
 router.get(
   '/users/:orderBy/:pageNumber',
   paginationControllers.calcPagination('users'),
   userControllers.getUsers
 );
+// GET users to assign to a ticket
+router.get(
+  '/users_to_assign',
+  userControllers.getUsersToAssign
+);
 
 // POST a new user
 router.post(
   '/users',
-  validation.validateCreateUser,
+  validationMiddleware.validateCreateUser,
   userControllers.postCreateUser
 );
 
 // POST a new password
 router.post(
   '/users/user/:editId/new_password',
-  validation.validateNewUserPw,
+  authorisationMiddleware.checkTargetIsMasterAdmin,
+  validationMiddleware.validateNewUserPw,
   userControllers.postNewUserPw
 );
 
 // PUT a user
 router.put(
   '/users/user/:editId',
-  validation.validateUpdateUser,
+  authorisationMiddleware.checkTargetIsMasterAdmin,
+  validationMiddleware.validateUpdateUser,
   userControllers.putUpdateUser
+);
+
+// DELETE a user
+router.delete(
+  '/users/user/:userId',
+  authorisationMiddleware.checkTargetIsMasterAdmin,
+  userControllers.deleteUser
 );
 
 module.exports = router;

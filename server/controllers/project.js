@@ -3,7 +3,11 @@ const Project = require('../models/project');
 exports.getProjects = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
 
-  Project.findAll(orderBy, req.pageNumber, req.teamId)
+  Project.findAll(
+    orderBy,
+    req.pageNumber,
+    req.teamId,
+  )
     .then(projects => {
       if (!projects[0].length) {
         const error = new Error;
@@ -24,7 +28,7 @@ exports.getProjects = (req, res, next) => {
 };
 
 exports.getAProject = (req, res, next) => {
-  Project.findById(req.params.id, req.teamId)
+  Project.findById(req.params.projectId, req.teamId)
     .then(project => {
       if (!project[0].length) {
         const error = new Error;
@@ -49,7 +53,7 @@ exports.postCreateProject = (req, res, next) => {
 
   newProject.create()
     .then(project => {
-      res.status(201).json({ id: project[0].insertId });
+      res.status(201).send({ id: project[0].insertId });
     })
     .catch(err => {
       next(err);
@@ -58,7 +62,7 @@ exports.postCreateProject = (req, res, next) => {
 
 exports.putUpdateProject = (req, res, next) => {
   const { editId } = req.params;
-  
+
   Project.update(
     editId,
     req.body.title,
@@ -66,7 +70,17 @@ exports.putUpdateProject = (req, res, next) => {
     req.teamId
   )
     .then(() => {
-      res.status(200).json({ id: editId });
+      res.status(200).send({ id: editId });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+exports.deleteProject = (req, res, next) => {
+  Project.deleteProject(req.params.projectId, req.teamId)
+    .then(() => {
+      res.status(200).send('Project successfully deleted.');
     })
     .catch(err => {
       next(err);

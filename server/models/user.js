@@ -73,11 +73,15 @@ module.exports = class User {
   static findAll(orderBy, pageNumber, teamId) {
     return db.execute(
       `SELECT
-        users.id, users.email, users.username, users.name, users.jobTitle, users.authLevel
+        users.id, users.email, users.username, users.name, users.jobTitle, users.authLevel, COUNT(user_tickets.userId) AS tickets
       FROM
         users
+      LEFT JOIN
+        user_tickets ON user_tickets.userId = users.id
       WHERE
         users.teamId = ${teamId}
+      GROUP BY
+        users.id
       ORDER BY
         ${orderBy}
       LIMIT
@@ -93,6 +97,26 @@ module.exports = class User {
         users
       WHERE
         users.id = ${id} AND users.teamId = ${teamId}`
+    );
+  };
+
+  static findUsersToAssign(teamId) {
+    return db.execute(
+      `SELECT
+        users.id, users.name, users.jobTitle
+      FROM
+        users
+      WHERE
+        users.teamId = ${teamId}`
+    );
+  };
+
+  static deleteUser(userId, teamId) {
+    return db.execute(
+      `DELETE FROM
+        users
+      WHERE 
+        users.id = ${userId} AND users.teamId = ${teamId}`
     );
   };
 };

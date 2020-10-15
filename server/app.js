@@ -3,12 +3,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 
-const auth = require('./middleware/auth');
+const authenticationMiddleware = require('./middleware/authentication');
+const authorisationMiddleware = require('./middleware/authorisation');
 
-const authRoutes = require('./routes/auth');
+const authenticationRoutes = require('./routes/authentication');
 const projectRoutes = require('./routes/projects');
 const ticketRoutes = require('./routes/tickets');
 const userRoutes = require('./routes/users');
+const teamRoutes = require('./routes/teams');
 
 const app = express();
 
@@ -19,14 +21,15 @@ app.use(cors({
 app.use(helmet());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(authRoutes);
-app.use(auth.checkUserToken);
-app.use(auth.checkAuthLevel);
+app.use(authenticationRoutes);
+app.use(authenticationMiddleware.checkUserToken);
+app.use(authorisationMiddleware.checkAuthLevel);
 app.use(projectRoutes);
 app.use(ticketRoutes);
 app.use(userRoutes);
+app.use(teamRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);
@@ -37,7 +40,7 @@ app.use((err, req, res, next) => {
     message = 'There was an error with the server. Please try again later.';
   }
 
-  res.status(status).json({ message: message });
+  res.status(status).send({ message: message });
 });
 
 app.listen(process.env.SERVER_PORT);

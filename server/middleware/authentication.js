@@ -34,6 +34,7 @@ exports.checkUserToken = (req, res, next) => {
       req.userId = decoded.userId;
       req.userAuthLevel = decoded.userAuthLevel;
       req.teamId = decoded.teamId;
+
       res.set({
         'x-access-token': accessToken,
         'x-refresh-token': refreshToken,
@@ -100,24 +101,4 @@ exports.checkUserToken = (req, res, next) => {
         });
     }
   });
-};
-
-exports.checkAuthLevel = (req, res, next) => {
-  const { userAuthLevel, method } = req;
-  const route = req.path.split('/')[1];
-  const authLevelError = new Error;
-  authLevelError.message = 'You are not authorised to perform this action.';
-  authLevelError.statusCode = 403;
-
-  // users with level 1 authority cannot use the POST or DELETE method
-  if (userAuthLevel <= 1 && (method === 'POST' || method === 'DELETE')) {
-    throw authLevelError;
-  }
-
-  // only admin users can access users routes
-  if (userAuthLevel <= 2 && route === 'users') {
-    throw authLevelError;
-  }
-
-  next();
 };

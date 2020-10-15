@@ -15,7 +15,7 @@ exports.getUsers = (req, res, next) => {
         throw error;
       }
 
-      res.status(200).send({
+      res.status(200).json({
         results: users[0],
         totalPages: req.totalPageCount,
         totalResults: req.totalRows
@@ -27,7 +27,7 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.getAUser = (req, res, next) => {
-  User.findById(req.params.id, req.teamId)
+  User.findById(req.params.userId, req.teamId)
     .then(user => {
       if (!user[0].length) {
         const error = new Error;
@@ -37,6 +37,16 @@ exports.getAUser = (req, res, next) => {
       }
 
       res.status(200).send(user[0][0]);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+exports.getUsersToAssign = (req, res, next) => {
+  User.findUsersToAssign(req.teamId)
+    .then(users => {
+      res.status(200).send(users[0]);
     })
     .catch(err => {
       next(err);
@@ -59,7 +69,7 @@ exports.postCreateUser = (req, res, next) => {
       return newUser.create()
     })
     .then(user => {
-      res.status(201).json({ id: user[0].insertId });
+      res.status(201).send({ id: user[0].insertId });
     })
     .catch(err => {
       next(err);
@@ -77,7 +87,7 @@ exports.putUpdateUser = (req, res, next) => {
     req.teamId
   )
     .then(() => {
-      res.status(200).json({ id: editId });
+      res.status(200).send({ id: editId });
     })
     .catch(err => {
       next(err);
@@ -95,9 +105,19 @@ exports.postNewUserPw = (req, res, next) => {
       return RefreshToken.deleteToken(editId);
     })
     .then(() => {
-      res.status(200).json({ id: editId });
+      res.status(200).send({ id: editId });
     })
     .catch(err => {
       next(err);
+    });
+};
+
+exports.deleteUser = (req, res, next) => {
+  User.deleteUser(req.params.userId, req.teamId)
+    .then(() => {
+      res.status(200).send('User successfully deleted.');
     })
+    .catch(err => {
+      next(err);
+    });
 };

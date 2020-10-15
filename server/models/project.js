@@ -32,7 +32,7 @@ module.exports = class Project {
       FROM 
         projects 
       LEFT JOIN
-        tickets ON tickets.projectId = projects.id AND tickets.teamId = ${teamId}
+        tickets ON tickets.projectId = projects.id    
       WHERE
         projects.teamId = ${teamId}
       GROUP BY
@@ -52,6 +52,15 @@ module.exports = class Project {
         projects 
       WHERE 
         projects.id = ${id} AND projects.teamId = ${teamId}`
+    );
+  };
+
+  static deleteProject(projectId, teamId) {
+    return db.execute(
+      `DELETE FROM
+        projects
+      WHERE 
+        projects.id = ${projectId} AND projects.teamId = ${teamId}`
     );
   };
 };

@@ -15,4 +15,15 @@ module.exports = class Pagination {
           ${table}.teamId = ${teamId}`}`
     );
   };
+
+  static getTotalRowCountUserTickets = (userId, teamId) => {
+    return db.execute(
+      `SELECT
+        COUNT(*) AS totalRows
+      FROM
+        user_tickets
+      WHERE
+        user_tickets.teamId = ${teamId} AND user_tickets.userId = ${userId}`
+    );
+  };
 };

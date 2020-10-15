@@ -42,8 +42,8 @@ class RefreshToken extends Token {
 
   insertToken() {
     return db.execute(
-      'INSERT INTO tokens (token, userId) VALUES (?, ?)',
-      [this.encoded, this.userId]
+      'INSERT INTO tokens (token, userId, teamId) VALUES (?, ?, ?)',
+      [this.encoded, this.userId, this.teamId]
     );
   };
 
