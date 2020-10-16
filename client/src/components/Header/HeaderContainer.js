@@ -53,14 +53,18 @@ const HeaderContainer = () => {
 
   return (
     <>
-      {isMobileNavOpen ? <DarkOverlay clicked={toggleMobileNav} /> : null}
+      {isMobileNavOpen ? (
+        <DarkOverlay 
+          clicked={toggleMobileNav} 
+          overlayClass="mobile-nav-menu" />
+      ) : null}
       <header className={`Header-Container${isMobileNavOpen ? ' open' : ''}`}>
         <HamburgerButton clicked={toggleMobileNav} />
         <div className="header-content">
           <Nav clicked={toggleMobileNav} />
           <button onClick={authContext.handleLogout}>
             logout
-          </button> 
+          </button>
         </div>
       </header>
     </>

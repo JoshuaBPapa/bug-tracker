@@ -5,5 +5,15 @@
   position: fixed;
   top: 0;
   width: 100%;  
-  z-index: 1;
+
+  // z-index if the overlay is triggered by opening the mobile nav menu
+  &.mobile-nav-menu {
+    z-index: 1;
+  }
+
+  // z-index if the overlay is triggered by opening the modal
+  // z-index must be larger than the header z-index
+  &.modal {
+    z-index: 4;
+  }
 }

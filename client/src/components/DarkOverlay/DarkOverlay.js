@@ -1,7 +1,7 @@
 import React from 'react';
 
-const DarkOverlay = ({ clicked }) => (
-  <div className="Dark-Overlay" onClick={clicked} /> 
+const DarkOverlay = ({ clicked, overlayClass }) => (
+  <div className={`Dark-Overlay ${overlayClass}`} onClick={clicked} /> 
 );
 
 export default DarkOverlay;
