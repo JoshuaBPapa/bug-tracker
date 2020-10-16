@@ -7,6 +7,8 @@ import Card from '../../Card/Card';
 import Priority from '../../Priority/Priority';
 import DateTime from '../../DateTime/DateTime';
 import Status from '../../Status/Status';
+import AssignUsersContainer from '../../AssignUsers/AssignUsersContainer';
+import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -34,6 +36,9 @@ const Ticket = ({ match }) => {
         <Link to={`/tickets/ticket/${id}/edit`}>
           edit
         </Link>
+        <DeleteItemContainer
+          itemType="ticket"
+          id={id} />
         <Card header={data.title} />
         <Card header="description">
           {data.description}
@@ -52,6 +57,7 @@ const Ticket = ({ match }) => {
         <Card header="priority">
           <Priority value={data.priority} />
         </Card>
+        <AssignUsersContainer id={id} />
       </div>
     );
   };
