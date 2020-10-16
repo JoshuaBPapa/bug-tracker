@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
+import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -30,7 +31,11 @@ const User = ({ match }) => {
         <Link to={`/users/user/${id}/new_password`}>
           change user's password
         </Link>
-        <TicketsTable ticketsAssignment={`/user/${id}`} />
+        <DeleteItemContainer
+          itemType="user"
+          id={id} />
+        <TicketsTable ticketsAssignment={`/user/assigned/${id}`} />
+        <TicketsTable ticketsAssignment={`/user/created/${id}`} />
       </div>
     );
   }

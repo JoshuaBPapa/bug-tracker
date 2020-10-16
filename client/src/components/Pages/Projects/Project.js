@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PageTitle from '../../PageTitle/PageTitle';
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
+import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -35,6 +36,9 @@ const Project = ({ match }) => {
         <Link to={`/projects/project/${id}/edit`}>
           Edit
         </Link>
+        <DeleteItemContainer
+          itemType="project"
+          id={id} />
         <div>
           <TicketsTable ticketsAssignment={`/project/${id}`} />
         </div>
