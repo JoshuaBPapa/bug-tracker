@@ -6,8 +6,8 @@ import TicketsTableBody from './TicketsTableBody';
 
 const TicketsTable = ({ ticketsAssignment }) => {
   const { pathname } = useLocation();
-  const isTicketsOrUserPage =
-    pathname === '/tickets' || pathname.includes('/users/user');
+  const isProjectPage = pathname.includes('/projects/project');
+  const isUserPage = pathname.includes('/users/user');
 
   const header = [
     {
@@ -27,21 +27,29 @@ const TicketsTable = ({ ticketsAssignment }) => {
       key: 'status'
     },
     {
-      text: 'users assigned',
-      key: 'usersAssigned'
-    },
-    {
       text: 'created',
       key: 'created'
     }
   ];
 
-  // add the project header to the tickets table on the tickets or user page
-  if (isTicketsOrUserPage) {
+  // add the project header to the tickets table if not on a project's page
+  if (!isProjectPage) {
     header.push({
       text: 'project',
       key: 'projectTitle'
     });
+  }
+
+  // add the users assigned header to the tickets table if not on a users's page
+  if (!isUserPage) {
+    header.splice(
+      4,
+      0,
+      {
+        text: 'users assigned',
+        key: 'usersAssigned'
+      }
+    );
   }
 
   return (
@@ -50,8 +58,9 @@ const TicketsTable = ({ ticketsAssignment }) => {
       endpoint={`tickets${ticketsAssignment}`}
       initOrderBy="priority"
       initIsOrderAscending={false}>
-      <TicketsTableBody 
-        isTicketsOrUserPage={isTicketsOrUserPage} />
+      <TicketsTableBody
+        isProjectPage={isProjectPage} 
+        isUserPage={isUserPage} />
     </TableContainer>
   );
 };
