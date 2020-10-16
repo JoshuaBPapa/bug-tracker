@@ -62,7 +62,7 @@ const useAxios = () => {
         !localStorage.getItem('refresh-token') ||
         !localStorage.getItem('userId')
       ) {
-        authContext.handleInvalidToken();
+        authContext.removeAuth();
       }
 
       return config;
@@ -142,7 +142,7 @@ const useAxios = () => {
               });
             // if the error is an invalid token or user id, logout the user
             } else if (err.response.data.message.includes('token')) {
-              authContext.handleInvalidToken();
+              authContext.removeAuth();
             // else dispatch the error message
             } else {
               dispatch({

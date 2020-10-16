@@ -44,16 +44,12 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const handleInvalidToken = () => {
-    removeAuth();
-  };
-
   return (
     <AuthContext.Provider value={{
       isAuth: isAuth,
       handleLogin: handleLogin,
       handleLogout: handleLogout,
-      handleInvalidToken: handleInvalidToken
+      removeAuth: removeAuth
     }}>
       {children}
     </AuthContext.Provider>
