@@ -65,6 +65,7 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
       ) {
         throw authLevelError;
       }
+      
       // level 1 users need to be allocated to the ticket to access it
       Ticket.findUsersAssignedToTicket(req.params.ticketId, req.teamId)
         .then(users => {
