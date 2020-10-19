@@ -1,0 +1,12 @@
+import React from 'react';
+
+import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
+
+const Team = () => (
+  <div>
+    {/* id not needed for deleting a team. The server will use the JWT for the teamId */}
+    <DeleteItemContainer itemType="team" />
+  </div>
+);
+
+export default Team;

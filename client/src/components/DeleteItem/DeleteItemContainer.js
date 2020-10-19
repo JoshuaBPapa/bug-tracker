@@ -15,11 +15,11 @@ const DeleteItemContainer = ({ itemType, id }) => {
     // remove auth and send the user back to the login screen if they delete their team
     if (itemType === 'team') {
       authContext.removeAuth();
+    } else {
+      history.push(`/${itemType}s`);
     }
-
-    history.push(`/${itemType}s`);
   };
-  
+
   let deleteMessage;
   switch (itemType) {
     case 'ticket':
@@ -29,10 +29,10 @@ const DeleteItemContainer = ({ itemType, id }) => {
       deleteMessage = 'If you delete a project, all tickets assigned to this project will be deleted as well.';
       break;
     case 'user':
-      deleteMessage = 'All tickets created by a user will remain after the user is deleted.';  
+      deleteMessage = 'All tickets created by a user will remain after the user is deleted.';
       break;
     case 'team':
-      deleteMessage = "Deleting a team will delete the entire team's account. All projects, tickets, and users will be removed.";  
+      deleteMessage = "Deleting a team will delete the entire team's account. All projects, tickets, and users will be removed.";
       break;
     default:
       break;
@@ -40,13 +40,15 @@ const DeleteItemContainer = ({ itemType, id }) => {
 
   return (
     <div>
-      <Modal 
+      <Modal
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}>
-        <DeleteItem 
+        <DeleteItem
           deleteMessage={deleteMessage}
           handleSuccess={handleSuccess}
-          deleteEndpoint={`${itemType}s/${itemType}/${id}`} />
+          deleteEndpoint={itemType === 'team' ?
+            'teams/team' :
+            `${itemType}s/${itemType}/${id}`} />
       </Modal>
       <button onClick={() => setIsModalOpen(true)}>
         Delete {itemType}

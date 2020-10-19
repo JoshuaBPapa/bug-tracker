@@ -17,6 +17,7 @@ import Users from './components/Pages/Users/Users';
 import UserNewPwFormPage from './components/Pages/Users/UserNewPwFormPage';
 import UserUpsertFormPage from './components/Pages/Users/UserUpsertFormPage';
 import User from './components/Pages/Users/User';
+import Team from './components/Pages/Team/Team';
 
 const Routes = () => (
   <Switch>
@@ -114,6 +115,10 @@ const Routes = () => (
       render={props => (
         <User {...props} />
       )} />
+
+    {/* TEAM ROUTES */}
+    {/* team page */}
+    <Route path="/team" exact={true} render={() => <Team />} />
   </Switch>
 );
 
