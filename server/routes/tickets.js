@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const paginationControllers = require('../controllers/pagination');
 const ticketControllers = require('../controllers/ticket');
+const commentControllers = require('../controllers/comment');
 const validationMiddleware = require('../middleware/validation');
 const authorisationMiddleWare = require('../middleware/authorisation');
 
@@ -12,6 +13,12 @@ router.get(
   '/tickets/ticket/:ticketId',
   authorisationMiddleWare.checkTicketAuthorisation(1),
   ticketControllers.getATicket
+);
+// GET ticket comments
+router.get(
+  '/tickets/ticket/:ticketId/comments',
+  authorisationMiddleWare.checkTicketAuthorisation(1),
+  ticketControllers.findTicketComments
 );
 // GET all users assigned to a ticket
 router.get(
@@ -53,6 +60,12 @@ router.post(
   '/tickets/:assignedProjectId',
   validationMiddleware.validateTicket,
   ticketControllers.postCreateTicket
+);
+// POST a comment to a ticket
+router.post(
+  '/tickets/ticket/:ticketId/comments',
+  validationMiddleware.validateComment,
+  commentControllers.postCreateComment
 );
 
 // PUT assign users to a ticket

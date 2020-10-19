@@ -143,6 +143,19 @@ module.exports = class Ticket {
     );
   };
 
+  static findTicketComments(ticketId, teamId) {
+    return db.execute(
+      `SELECT
+        comments.id, comments.title, comments.content, comments.created, users.id as userId, users.name, users.jobTitle
+      FROM
+        comments, users
+      WHERE
+        comments.ticketId = ${ticketId} AND users.id = comments.userId AND comments.teamId = ${teamId}
+      ORDER BY
+        comments.created DESC`
+    )
+  }
+
   static deleteUsersAssignedToTicket(ticketId, teamId) {
     return db.execute(
       `DELETE FROM

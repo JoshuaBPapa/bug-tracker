@@ -107,6 +107,23 @@ exports.findTicketsAssignedToUser = (req, res, next) => {
     });
 };
 
+exports.findTicketComments = (req, res, next) => {
+  Ticket.findTicketComments(req.params.ticketId, req.teamId)
+    .then(comments => {
+      if (!comments[0].length) {
+        const error = new Error;
+        error.message = 'This ticket has no comments.';
+        error.statusCode = 404;
+        throw error;
+      }
+
+      res.status(200).send(comments[0]);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
 exports.findTicketsCreatedByUser = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
 

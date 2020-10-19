@@ -161,3 +161,17 @@ exports.validateNewUserPw = [
   ...checkPassword,
   (req, res, next) => validationMiddleware(req, res, next)
 ];
+
+exports.validateComment = [
+  body('title')
+    .trim()
+    .not().isEmpty()
+    .withMessage('Title can not be empty')
+    .isLength({ max: 25 })
+    .withMessage('Maximum of 25 characters allowed'),
+  body('content')
+    .trim()
+    .isLength({ max: 500 })
+    .withMessage('Maximum of 500 characters allowed'),
+  (req, res, next) => validationMiddleware(req, res, next)
+];
