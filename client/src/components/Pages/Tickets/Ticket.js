@@ -11,6 +11,7 @@ import AssignUsersContainer from '../../AssignUsers/AssignUsersContainer';
 import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 
 import useAxios from '../../../hooks/useAxios';
+import CommentsContainer from '../../Comments/CommentsContainer';
 
 const Ticket = ({ match }) => {
   const { id } = match.params;
@@ -44,7 +45,7 @@ const Ticket = ({ match }) => {
           {data.description}
         </Card>
         <Card header="project">
-          <Link to={'/projects/project/' + data.projectId}>
+          <Link to={`/projects/project/${data.projectId}`}>
             {data.projectTitle}
           </Link>
         </Card>
@@ -58,6 +59,7 @@ const Ticket = ({ match }) => {
           <Priority value={data.priority} />
         </Card>
         <AssignUsersContainer id={id} />
+        <CommentsContainer id={id} />
       </div>
     );
   };
