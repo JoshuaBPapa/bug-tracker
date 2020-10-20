@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('access-token');
     localStorage.removeItem('refresh-token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('x-authorisation-level');
 
     setIsAuth(false);
     history.push('/login'); 

@@ -2,6 +2,8 @@ import React from 'react';
 
 import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 
+import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+
 const Team = () => (
   <div>
     {/* id not needed for deleting a team. The server will use the JWT for the teamId */}
@@ -9,4 +11,4 @@ const Team = () => (
   </div>
 );
 
-export default Team;
+export default withAuthLevelCheck(Team, 4);

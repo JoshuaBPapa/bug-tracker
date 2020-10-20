@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import PageTitle from '../../PageTitle/PageTitle';
 import UsersTable from '../../Table/UsersTable/UsersTable';
 
+import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+
 const Users = () => (
   <div>
     <PageTitle>
@@ -16,4 +18,4 @@ const Users = () => (
   </div>
 );
 
-export default Users;
+export default withAuthLevelCheck(Users, 2);

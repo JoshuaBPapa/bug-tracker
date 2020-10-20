@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
@@ -7,8 +7,10 @@ import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 
 import useAxios from '../../../hooks/useAxios';
 
-const User = ({ match }) => {
-  const { id } = match.params;
+import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+
+const User = () => {
+  const { id } = useParams();
   const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {
@@ -43,4 +45,4 @@ const User = ({ match }) => {
   return user;
 };
 
-export default User;
+export default withAuthLevelCheck(User, 2);

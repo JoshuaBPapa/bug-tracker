@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import PageTitle from '../../PageTitle/PageTitle';
@@ -9,12 +9,12 @@ import DateTime from '../../DateTime/DateTime';
 import Status from '../../Status/Status';
 import AssignUsersContainer from '../../AssignUsers/AssignUsersContainer';
 import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
-
-import useAxios from '../../../hooks/useAxios';
 import CommentsContainer from '../../Comments/CommentsContainer';
 
-const Ticket = ({ match }) => {
-  const { id } = match.params;
+import useAxios from '../../../hooks/useAxios';
+
+const Ticket = () => {
+  const { id } = useParams();
   const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {

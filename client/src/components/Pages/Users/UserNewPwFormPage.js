@@ -1,11 +1,14 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import FormContainer from '../../Forms/FormContainer';
 import UserUpdatePwForm from '../../Forms/UserNewPwForm';
 
-const UserUpdatePwFormPage = ({ match }) => {
-  const { editId } = match.params;
+import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+
+const UserNewPwFormPage = () => {
+  const { editId } = useParams();
 
   return (
     <div>
@@ -22,4 +25,4 @@ const UserUpdatePwFormPage = ({ match }) => {
   );
 };
 
-export default UserUpdatePwFormPage;
+export default withAuthLevelCheck(UserNewPwFormPage, 3);

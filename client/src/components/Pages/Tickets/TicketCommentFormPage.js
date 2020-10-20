@@ -1,11 +1,12 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import FormContainer from '../../Forms/FormContainer';
 import TicketCommentForm from '../../Forms/TicketCommentForm';
 
-const TicketCommentFormPage = ({ match }) => {
-  const { ticketId, } = match.params;
+const TicketCommentFormPage = () => {
+  const { ticketId } = useParams();
 
   return (
     <div>

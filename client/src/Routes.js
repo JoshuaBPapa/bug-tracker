@@ -34,23 +34,17 @@ const Routes = () => (
     <Route
       path="/projects/project/:editId/edit"
       exact={true}
-      render={props => (
-        <ProjectUpsertFormPage {...props} />
-      )} />
+      render={() => <ProjectUpsertFormPage />} />
     {/* project page */}
     <Route
       path="/projects/project/:id"
       exact={true}
-      render={props => (
-        <Project {...props} />
-      )} />
+      render={() => <Project />} />
     {/* create a project page */}
     <Route
       path="/projects/create"
       exact={true}
-      render={props => (
-        <ProjectUpsertFormPage {...props} />
-      )} />
+      render={() => <ProjectUpsertFormPage />} />
 
     {/* TICKET ROUTES */}
     {/* tickets page */}
@@ -59,31 +53,23 @@ const Routes = () => (
     <Route
       path="/tickets/ticket/:ticketId/comment"
       exact={true}
-      render={props => (
-        <TicketCommentFormPage {...props} />
-      )} />
+      render={() => <TicketCommentFormPage />} />
     {/* edit a ticket page */}
     <Route
       path="/tickets/ticket/:editId/edit"
       exact={true}
-      render={props => (
-        <TicketUpsertFormPage {...props} />
-      )} />
-    {/* create a ticket page */}  
+      render={() => <TicketUpsertFormPage />} />
+    {/* create a ticket page */}
     <Route
       path="/tickets/create/:assignedProjectId"
       exact={true}
-      render={props => (
-        <TicketUpsertFormPage {...props} />
-      )} />
+      render={() => <TicketUpsertFormPage />} />
     {/* ticket page */}
     <Route
       path="/tickets/ticket/:id"
       exact={true}
-      render={props => (
-        <Ticket {...props} />
-      )} />
-
+      render={() => <Ticket />} />
+      
     {/* USER ROUTES */}
     {/* users page */}
     <Route path="/users" exact={true} render={() => <Users />} />
@@ -91,30 +77,22 @@ const Routes = () => (
     <Route
       path="/users/user/:editId/new_password"
       exact={true}
-      render={props => (
-        <UserNewPwFormPage {...props} />
-      )} />
+      render={() => <UserNewPwFormPage />} />
     {/* edit a user page */}
     <Route
       path="/users/user/:editId/edit"
       exact={true}
-      render={props => (
-        <UserUpsertFormPage {...props} />
-      )} />
+      render={() => <UserUpsertFormPage />} />
     {/* create a user page */}
     <Route
       path="/users/create"
       exact={true}
-      render={props => (
-        <UserUpsertFormPage {...props} />
-      )} />
+      render={() => <UserUpsertFormPage />} />
     {/* user page */}
     <Route
       path="/users/user/:id"
       exact={true}
-      render={props => (
-        <User {...props} />
-      )} />
+      render={() => <User />} />
 
     {/* TEAM ROUTES */}
     {/* team page */}

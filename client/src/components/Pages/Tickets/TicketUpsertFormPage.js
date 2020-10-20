@@ -1,11 +1,12 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import FormContainer from '../../Forms/FormContainer';
 import TicketUpsertForm from '../../Forms/TicketUpsertForm';
 
-const TicketUpsertFormPage = ({ match }) => {
-  const { editId, assignedProjectId } = match.params;
+const TicketUpsertFormPage = () => {
+  const { editId, assignedProjectId } = useParams();
 
   let endpointToSendData, endpointToGetEditData;
   if (editId) {

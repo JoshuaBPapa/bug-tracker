@@ -1,11 +1,14 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import FormContainer from '../../Forms/FormContainer';
 import UserUpsertForm from '../../Forms/UserUpsertForm';
 
-const UserUpsertFormPage = ({ match }) => {
-  const { editId } = match.params;
+import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+
+const UserUpsertFormPage = () => {
+  const { editId } = useParams();
 
   let endpointToSendData, endpointToGetEditData;
   if (editId) {
@@ -30,4 +33,4 @@ const UserUpsertFormPage = ({ match }) => {
   );
 };
 
-export default UserUpsertFormPage;
+export default withAuthLevelCheck(UserUpsertFormPage, 3);
