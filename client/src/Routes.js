@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 // auth pages
-import LoginSignUp from './components/Pages/Auth/LoginSignUp';
+const LoginSignUp = lazy(() => import('./components/Pages/Auth/LoginSignUp'));
 // project pages
-import Projects from './components/Pages/Projects/Projects';
-import ProjectUpsertFormPage from './components/Pages/Projects/ProjectUpsertFormPage';
-import Project from './components/Pages/Projects/Project';
+const Projects = lazy(() => import('./components/Pages/Projects/Projects'));
+const ProjectUpsertFormPage = lazy(() => import('./components/Pages/Projects/ProjectUpsertFormPage'));
+const Project = lazy(() => import('./components/Pages/Projects/Project'));
 // ticket pages
-import Ticket from './components/Pages/Tickets/Ticket';
-import TicketUpsertFormPage from './components/Pages/Tickets/TicketUpsertFormPage';
-import TicketCommentFormPage from './components/Pages/Tickets/TicketCommentFormPage';
-import Tickets from './components/Pages/Tickets/Tickets';
+const Ticket = lazy(() => import('./components/Pages/Tickets/Ticket'));
+const TicketUpsertFormPage = lazy(() => import('./components/Pages/Tickets/TicketUpsertFormPage'));
+const TicketCommentFormPage = lazy(() => import('./components/Pages/Tickets/TicketCommentFormPage'));
+const Tickets = lazy(() => import('./components/Pages/Tickets/Tickets'));
 // user pages
-import Users from './components/Pages/Users/Users';
-import UserNewPwFormPage from './components/Pages/Users/UserNewPwFormPage';
-import UserUpsertFormPage from './components/Pages/Users/UserUpsertFormPage';
-import User from './components/Pages/Users/User';
-import Team from './components/Pages/Team/Team';
+const Users = lazy(() => import('./components/Pages/Users/Users'));
+const UserNewPwFormPage = lazy(() => import('./components/Pages/Users/UserNewPwFormPage'));
+const UserUpsertFormPage = lazy(() => import('./components/Pages/Users/UserUpsertFormPage'));
+const User = lazy(() => import('./components/Pages/Users/User'));
+const Team = lazy(() => import('./components/Pages/Team/Team'));
 
 const Routes = () => (
   <Switch>
