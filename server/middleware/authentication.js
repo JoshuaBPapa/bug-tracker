@@ -38,7 +38,8 @@ exports.checkUserToken = (req, res, next) => {
       res.set({
         'x-access-token': accessToken,
         'x-refresh-token': refreshToken,
-        'x-userid': userId
+        'x-userid': userId,
+        'x-authorisation-level': decoded.userAuthLevel
       });
 
       next();
@@ -86,7 +87,8 @@ exports.checkUserToken = (req, res, next) => {
             res.set({
               'x-access-token': newAccessToken.encoded,
               'x-refresh-token': refreshToken,
-              'x-userid': decoded.userId
+              'x-userid': decoded.userId,
+              'x-authorisation-level': decoded.userAuthLevel
             });
 
             req.userId = decoded.userId;

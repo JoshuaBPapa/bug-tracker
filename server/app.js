@@ -15,7 +15,12 @@ const teamRoutes = require('./routes/teams');
 const app = express();
 
 app.use(cors({
-  exposedHeaders: ['x-access-token', 'x-refresh-token', 'x-userid']
+  exposedHeaders: [
+    'x-access-token', 
+    'x-refresh-token', 
+    'x-userid', 
+    'x-authorisation-level'
+  ]
 }));
 
 app.use(helmet());

@@ -49,7 +49,8 @@ exports.signUp = (req, res, next) => {
       return res.set({
         'x-access-token': accessToken.encoded,
         'x-refresh-token': refreshToken.encoded,
-        'x-userid': userId
+        'x-userid': userId,
+        'x-authorisation-level': 4
       })
         .status(201)
         .send('Sign up successful.');
@@ -110,7 +111,8 @@ exports.login = (req, res, next) => {
       return res.set({
         'x-access-token': accessToken.encoded,
         'x-refresh-token': refreshToken.encoded,
-        'x-userid': user.id
+        'x-userid': user.id,
+        'x-authorisation-level': user.authLevel
       })
         .status(201)
         .send('Login successful.');
