@@ -124,6 +124,21 @@ exports.findTicketComments = (req, res, next) => {
     });
 };
 
+exports.getTicketColumnCount = (req, res, next) => {
+  Ticket.getTicketColumnCount(
+    req.params.column,
+    req.params.parentTable,
+    req.params.parentId,
+    req.teamId
+  )
+    .then(count => {
+      res.status(200).send(count[0]);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
 exports.findTicketsCreatedByUser = (req, res, next) => {
   const orderBy = req.params.orderBy.replace("-", " ");
 

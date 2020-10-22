@@ -120,7 +120,7 @@ module.exports = class Ticket {
       FROM 
         tickets, projects
       WHERE
-        tickets.teamId = ${teamId} AND tickets.userId = ${userId}
+        tickets.teamId = ${teamId} AND tickets.userId = ${userId} AND projects.teamId = ${teamId} AND projects.id = tickets.projectId
       GROUP BY
         tickets.id
       ORDER BY
@@ -150,11 +150,49 @@ module.exports = class Ticket {
       FROM
         comments, users
       WHERE
-        comments.ticketId = ${ticketId} AND users.id = comments.userId AND comments.teamId = ${teamId}
+        comments.ticketId = ${ticketId} AND users.id = comments.userId AND comments.teamId = ${teamId} AND users.teamId = ${teamId}
       ORDER BY
         comments.created DESC`
-    )
-  }
+    );
+  };
+
+  static getTicketColumnCount(column, parentTable, parentId, teamId) {
+    let query;
+    // query if targeting all tickets assigned to a user
+    if (parentTable === 'user_tickets') {
+      query =
+        `FROM
+          tickets
+        INNER JOIN
+          user_tickets ON ${parentId} = user_tickets.userId
+        WHERE
+          user_tickets.ticketId = tickets.id AND tickets.teamId = ${teamId}`;
+      // query if targeting all tickets relating to a parent table - Project or which user created by
+    } else if (parentTable) {
+      query =
+        `FROM
+          tickets, ${parentTable}s
+        WHERE
+          tickets.${parentTable}Id = ${parentId} AND ${parentTable}s.id = ${parentId} AND tickets.teamId = ${teamId} AND ${parentTable}s.teamId = ${teamId}`;
+      // query if targeting all tickets in a team
+    } else {
+      query = 
+        `FROM
+          tickets
+        WHERE
+          tickets.teamId = ${teamId}`;
+    }
+
+    return db.execute(
+      `SELECT
+        tickets.${column}, COUNT (*) AS count
+      ${query}
+      GROUP BY
+        tickets.${column}
+      ORDER BY
+        tickets.${column} ASC`
+    );
+  };
 
   static deleteUsersAssignedToTicket(ticketId, teamId) {
     return db.execute(

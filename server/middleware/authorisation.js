@@ -65,6 +65,14 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
       ) {
         throw authLevelError;
       }
+
+      // level 1 users can only GET the column count of tickets assigned to them
+      if (
+        req.path.includes('/tickets/status_count/user_tickets') &&
+        req.params.parentId !== req.userId
+      ) {
+        throw authLevelError;
+      }
       
       // level 1 users need to be allocated to the ticket to access it
       Ticket.findUsersAssignedToTicket(req.params.ticketId, req.teamId)

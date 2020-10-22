@@ -47,6 +47,12 @@ router.get(
   paginationControllers.calcPagination('tickets', 'user'),
   ticketControllers.findTicketsCreatedByUser
 );
+// GET tickets status count
+router.get(
+  '/tickets/column_count/:column/:parentTable?/:parentId?',
+  authorisationMiddleWare.checkTicketAuthorisation(1),
+  ticketControllers.getTicketColumnCount
+);
 // GET all tickets
 router.get(
   '/tickets/:orderBy/:pageNumber',
