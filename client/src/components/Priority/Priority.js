@@ -1,32 +1,16 @@
 import React from 'react';
 
-const Priority = ({ value, isOption }) => {
-  let priority;
-  switch (value) {
-    case 1:
-      priority = 'severe';
-      break;
-    case 2:
-      priority = 'high';
-      break;
-    case 3:
-      priority = 'moderate';
-      break;
-    case 4:
-      priority = 'low';
-      break;
-    default:
-      priority = 'n/a';
-  };
-  
+import { convertPriorityToString } from '../../helpers/priority';
+
+const Priority = ({ value, isOption }) => {  
   if (isOption) {
     return (
       <option value={value}>
-        {priority}
+        {convertPriorityToString(value)}
       </option>
     );
   } else {
-    return priority;
+    return convertPriorityToString(value);
   };
 };
 

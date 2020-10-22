@@ -1,33 +1,16 @@
 import React from 'react';
 
-const AuthorisationLevel = ({ value, isOption }) => {
-  let authorisationLevel;
-  switch (value) {
-    case 1:
-      authorisationLevel = 'user';
-      break;
-    case 2:
-      authorisationLevel = 'project manager';
-      break;
-    case 3:
-      authorisationLevel = 'admin';
-      break;
-    case 4:
-      authorisationLevel = 'master admin';
-      break;
-    default:
-      authorisationLevel = 'n/a';
-      break;
-  };
+import { convertAuthLevelToString } from '../../helpers/authorisation-level';
 
+const AuthorisationLevel = ({ value, isOption }) => {
   if (isOption) {
     return (
       <option value={value}>
-        {authorisationLevel}
+        {convertAuthLevelToString(value)}
       </option>
     );
   } else {
-    return authorisationLevel;
+    return convertAuthLevelToString(value);
   }
 };
 

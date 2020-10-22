@@ -1,33 +1,17 @@
 import React from 'react';
 
-const Status = ({ value, isOption }) => {
-  let status;
-  switch (value) {
-    case 1:
-      status = 'backlog';
-      break
-    case 2:
-      status = 'in progress';
-      break
-    case 3:
-      status = 'requires testing';
-      break
-    case 4:
-      status = 'complete';
-      break
-    default:
-      status = 'n/a';
-  };
+import { convertStatusToString } from '../../helpers/status';
 
+const Status = ({ value, isOption }) => {
   if (isOption) {
     return (
       <option value={value}>
-        {status}
+        {convertStatusToString(value)}
       </option>
     );
   } else {
-    return status;
-  };
+    return convertStatusToString(value);
+  }
 };
 
 export default Status;
