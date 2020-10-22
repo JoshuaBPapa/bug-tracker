@@ -5,6 +5,9 @@ import PageTitle from '../../PageTitle/PageTitle';
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
 import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
+import TicketChartsWrapper from '../../Charts/TicketChartsWrapper';
+import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
+import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -38,6 +41,10 @@ const Project = () => {
         <Link to={`/projects/project/${id}/edit`}>
           Edit
         </Link>
+        <TicketChartsWrapper>
+          <TicketsStatusBarChart endpoint={`/project/${id}`}/>
+          <TicketsPriorityPieChart endpoint={`/project/${id}`}/>
+        </TicketChartsWrapper>
         <DeleteItemContainer
           itemType="project"
           id={id} />

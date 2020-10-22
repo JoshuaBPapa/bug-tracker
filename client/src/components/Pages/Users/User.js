@@ -8,6 +8,9 @@ import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 import useAxios from '../../../hooks/useAxios';
 
 import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+import TicketChartsWrapper from '../../Charts/TicketChartsWrapper';
+import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
+import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
 
 const User = () => {
   const { id } = useParams();
@@ -36,6 +39,14 @@ const User = () => {
         <DeleteItemContainer
           itemType="user"
           id={id} />
+        <TicketChartsWrapper>
+          <TicketsStatusBarChart endpoint={`/user/${id}`} />
+          <TicketsPriorityPieChart endpoint={`/user/${id}`} />
+        </TicketChartsWrapper>
+        <TicketChartsWrapper>
+          <TicketsStatusBarChart endpoint={`/user_tickets/${id}`} />
+          <TicketsPriorityPieChart endpoint={`/user_tickets/${id}`} />
+        </TicketChartsWrapper>
         <TicketsTable ticketsAssignment={`/user/assigned/${id}`} />
         <TicketsTable ticketsAssignment={`/user/created/${id}`} />
       </div>
