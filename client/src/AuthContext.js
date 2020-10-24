@@ -14,17 +14,17 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = () => {
     setIsAuth(true);
-    history.push('/projects');
+    history.push(`/users/user/${localStorage.getItem('userId')}`); 
   };
 
   const removeAuth = () => {
     localStorage.removeItem('access-token');
     localStorage.removeItem('refresh-token');
     localStorage.removeItem('userId');
-    localStorage.removeItem('x-authorisation-level');
+    localStorage.removeItem('authorisation-level');
 
     setIsAuth(false);
-    history.push('/login'); 
+    history.push(`/login`); 
   };
 
   const handleLogout = () => {

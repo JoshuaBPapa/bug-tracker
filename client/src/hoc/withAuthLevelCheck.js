@@ -11,7 +11,7 @@ const withAuthLevelCheck = (WrappedComponent, requiredAuthLevel) => {
 
   return class extends React.Component {
     render() {
-      if (requiredAuthLevel > Number(localStorage.getItem('x-authorisation-level'))) {
+      if (requiredAuthLevel > localStorage.getItem('authorisation-level')) {
         return (
           <FeedbackMessage>
             You are not authorised to view this page.

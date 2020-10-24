@@ -74,7 +74,7 @@ const useAxios = () => {
         localStorage.setItem('access-token', response.headers['x-access-token']);
         localStorage.setItem('refresh-token', response.headers['x-refresh-token']);
         localStorage.setItem('userId', response.headers['x-userid']);
-        localStorage.setItem('x-authorisation-level', response.headers['x-authorisation-level']);
+        localStorage.setItem('authorisation-level', response.headers['x-authorisation-level']);
 
         authContext.handleLogin();
 

@@ -16,6 +16,7 @@ import useAxios from '../../../hooks/useAxios';
 const Ticket = () => {
   const { id } = useParams();
   const { data, error, sendRequest } = useAxios();
+  const userAuthLevel = localStorage.getItem('authorisation-level');
 
   useEffect(() => {
     sendRequest('GET', `tickets/ticket/${id}`)
@@ -37,9 +38,12 @@ const Ticket = () => {
         <Link to={`/tickets/ticket/${id}/edit`}>
           edit
         </Link>
-        <DeleteItemContainer
-          itemType="ticket"
-          id={id} />
+        {/* only render DeleteItemContainer for users with authlevel above 1 */}
+        {userAuthLevel > 1 ? (
+          <DeleteItemContainer
+            itemType="ticket"
+            id={id} />
+        ) : null}
         <Card header={data.title} />
         <Card header="description">
           {data.description}
@@ -58,7 +62,10 @@ const Ticket = () => {
         <Card header="priority">
           <Priority value={data.priority} />
         </Card>
-        <AssignUsersContainer id={id} />
+        {/* only render AssignUsersContainer for users with authlevel above 1 */}
+        {userAuthLevel > 1 ? (
+          <AssignUsersContainer id={id} />  
+        ) : null}
         <CommentsContainer id={id} />
       </div>
     );

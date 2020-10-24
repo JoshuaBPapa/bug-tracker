@@ -6,12 +6,14 @@ import TicketChartsWrapper from '../../Charts/TicketChartsWrapper';
 import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
 import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
 
+import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+
 const Tickets = () => (
   <div>
     <PageTitle>
       tickets
     </PageTitle>
-    {/* tickets charts on the tickets page are not fetching tickets assigned to a project or user so an empty string is passed */}
+    {/* ticket charts on the tickets page are not fetching tickets assigned to a project or user so an empty string is passed */}
     <TicketChartsWrapper>
       <TicketsStatusBarChart endpoint=""/>
       <TicketsPriorityPieChart endpoint=""/>
@@ -21,4 +23,4 @@ const Tickets = () => (
   </div>
 );
 
-export default Tickets;
+export default withAuthLevelCheck(Tickets, 2);
