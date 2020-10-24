@@ -47,7 +47,7 @@ router.get(
   paginationControllers.calcPagination('tickets', 'user'),
   ticketControllers.findTicketsCreatedByUser
 );
-// GET tickets status count
+// GET the count of how many tickets have the same value by column - like how many tickets have the same status value
 router.get(
   '/tickets/column_count/:column/:parentTable?/:parentId?',
   authorisationMiddleWare.checkTicketAuthorisation(1),

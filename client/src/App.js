@@ -1,7 +1,8 @@
 import React, { Suspense, useContext } from 'react';
 
 import HeaderContainer from './components/Header/HeaderContainer';
-import Routes from './Routes';
+import NotAuthRoutes from './NotAuthRoutes';
+import IsAuthRoutes from './IsAuthRoutes';
 
 import { AuthContext } from './AuthContext';
 
@@ -12,11 +13,17 @@ function App() {
 
   return (
     <div className="App">
-      {authContext.isAuth ? <HeaderContainer /> : null}
       <Suspense fallback={<p>loading...</p>}>
-        <main>
-          <Routes />
-        </main>
+        {authContext.isAuth ? (
+          <>
+            <HeaderContainer />
+            <main>
+              <IsAuthRoutes />
+            </main>
+          </>
+        ) : (
+          <NotAuthRoutes />
+        )}
       </Suspense>
     </div>
   );

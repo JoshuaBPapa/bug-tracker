@@ -17,8 +17,9 @@ exports.checkAuthLevel = (req, res, next) => {
 
   // permissions for a level 1 user
   if (userAuthLevel === 1) {
-    // level 1 users are only allowed to access tickets routes
-    if (route !== 'tickets') {
+    // level 1 users are only allowed to access tickets routes and their own user information
+    if (route === 'tickets' || req.path === `/users/user/${req.userId}`) {
+    } else {
       throw authLevelError;
     }
   }
@@ -61,20 +62,21 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
       // level 1 users can only GET the tickets assigned to them
       if (
         req.path.includes('/tickets/user/assigned') &&
-        req.params.userId !== req.userId
+        Number(req.params.userId) !== req.userId
       ) {
         throw authLevelError;
       }
 
       // level 1 users can only GET the column count of tickets assigned to them
       if (
-        req.path.includes('/tickets/status_count/user_tickets') &&
-        req.params.parentId !== req.userId
-      ) {
+        req.path.includes('/tickets/column_count/user_tickets') &&
+        Number(req.params.parentId) !== req.userId
+        ) {
         throw authLevelError;
       }
       
-      // level 1 users need to be allocated to the ticket to access it
+      // level 1 users need to be allocated to a ticket to access it
+      if (req.params.ticketId) {
       Ticket.findUsersAssignedToTicket(req.params.ticketId, req.teamId)
         .then(users => {
           if (!users[0].find(user => user.id === req.userId)) {
@@ -84,6 +86,7 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
         .catch(err => {
           next(err);
         });
+      }
     }
 
     next();
@@ -113,7 +116,7 @@ exports.checkTargetIsMasterAdmin = (req, res, next) => {
 
         // prevent the master admin from reducing their authorisation level
         if (method === 'PUT') {
-          if (Number(targetUserId) === req.userId && req.body.authLevel < 4) {
+          if (Number(targetUserId) === req.userId && Number(req.body.authLevel) < 4) {
             const error = new Error;
             error.message = 'The master admin can not reduce their authorisation level.';
             error.statusCode = 403;

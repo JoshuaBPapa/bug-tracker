@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Nav = ({ clicked }) => {
-  const userAuthLevel = Number(localStorage.getItem('x-authorisation-level'));
+  const userAuthLevel = Number(localStorage.getItem('authorisation-level'));
+  const userId = localStorage.getItem('userId'); 
 
-  let links = [];
+  let links = [{
+    title: 'home',
+    url: `/users/user/${userId}`
+  }];
   // add links for project managers and above
   if (userAuthLevel >= 2) {
     links.push(
