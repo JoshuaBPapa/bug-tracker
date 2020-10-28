@@ -1,0 +1,35 @@
+.Form-Container {
+  .Form-Field {
+    padding-bottom: 0.75em;
+    
+    .form-title {
+      display: block;
+      text-transform: capitalize;
+    }
+
+    input {
+      padding: 0.25em;
+      width: 100%;
+    }
+  }
+
+  button {
+    background-color: $primaryColour;
+    color: white;
+    display: block;
+    font-size: 1rem;
+    margin: auto;
+    margin-bottom: 0.75em;
+    padding: 0.33em 1em
+  }
+
+  .Form-Error, .Validation-Error {
+    color: red;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  .Form-Error {
+    text-align: center;
+  }
+}

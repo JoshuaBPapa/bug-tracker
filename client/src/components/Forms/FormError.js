@@ -9,7 +9,7 @@ const FormError = ({ error }) => {
   }
 
   return (
-    <div>
+    <div className="Form-Error">
       {formError}
     </div>
   );

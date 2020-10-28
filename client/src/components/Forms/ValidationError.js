@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ValidationError = ({ msg }) => (
-  <div>
+  <div className="Validation-Error">
     {msg}
   </div>
 );

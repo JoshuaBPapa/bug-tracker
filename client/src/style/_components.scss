@@ -1,11 +1,21 @@
 // --- Header --- //
-@import '../components/Header/_Header.scss';
+@import '../components/Header/Header.scss';
 
 // --- Table --- //
-@import '../components/Table/_Table.scss';
+@import '../components/Table/Table.scss';
 
 // --- Dark Overlay --- //
 @import '../components/DarkOverlay/DarkOverlay.scss';
 
 // --- Modal --- //
 @import '../components/Modal/Modal.scss';
+
+// --- Page Title --- //
+
+@import '../components/PageTitle/PageTitle.scss';
+
+// --- Forms --- //
+@import '../components//Forms/Forms.scss';
+
+// --- Login Sign Up Page --- //
+@import '../components/Pages/Auth/LoginSignUp.scss';

@@ -3,9 +3,9 @@ import React from 'react';
 import ValidationErr from './ValidationError';
 
 const FormField = ({ children, title, valErr }) => (
-  <div>
+  <div className="Form-Field">
     <label>
-      {title}
+      <span className="form-title">{title}</span>
       {children}
     </label>
     {valErr ? <ValidationErr msg={valErr} /> : null}
