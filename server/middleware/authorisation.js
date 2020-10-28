@@ -95,7 +95,7 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
 
 // only level 4 users can update the master admin in users routes
 exports.checkTargetIsMasterAdmin = (req, res, next) => {
-  const { params, userAuthLevel } = req;
+  const { params, userAuthLevel, method } = req;
   const targetUserId = params.userId ? params.userId : params.editId;
 
   User.findById(targetUserId, req.teamId)
