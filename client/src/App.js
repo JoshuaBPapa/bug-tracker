@@ -3,6 +3,7 @@ import React, { Suspense, useContext } from 'react';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NotAuthRoutes from './NotAuthRoutes';
 import IsAuthRoutes from './IsAuthRoutes';
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 
 import { AuthContext } from './AuthContext';
 
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<LoadingSpinner />}>
         {authContext.isAuth ? (
           <>
             <HeaderContainer />
