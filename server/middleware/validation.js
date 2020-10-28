@@ -120,9 +120,11 @@ exports.validateSignup = [
           return true;
         });
     }),
+  checkJobTitle,
   checkUsername,
   checkName,
   checkEmail,
+  ...checkPassword,
   (req, res, next) => validationMiddleware(req, res, next)
 ];
 
