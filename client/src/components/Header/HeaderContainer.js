@@ -6,6 +6,8 @@ import Nav from './Nav';
 
 import { AuthContext } from '../../AuthContext';
 
+import logout from '../../assets/icons/logout.png';
+
 const HeaderContainer = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileWidth, setIsMobileWidth] = useState(false);
@@ -62,7 +64,10 @@ const HeaderContainer = () => {
         <HamburgerButton clicked={toggleMobileNav} />
         <div className="header-content">
           <Nav clicked={toggleMobileNav} />
-          <button onClick={authContext.handleLogout}>
+          <button 
+            onClick={authContext.handleLogout}
+            className="logout-button">
+            <img src={logout} alt="logout" />
             logout
           </button>
         </div>

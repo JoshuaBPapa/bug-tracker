@@ -2,7 +2,7 @@ $headerTransitionSpeed: 0.3s;
 
 .Header-Container {  
   background-color: $primaryColour;
-  height: 50px;
+  height: $headerHeight;
   left: 0;
   position: fixed;
   top: 0;
@@ -10,11 +10,11 @@ $headerTransitionSpeed: 0.3s;
   z-index: 2;
 
   .Hamburger-Button {
-    height: 50px;
+    height: $headerHeight;
     left: 0;
     position: absolute;
     top: 0;
-    width: 50px;
+    width: $headerHeight;
     z-index: 3;
 
     span {
@@ -53,19 +53,28 @@ $headerTransitionSpeed: 0.3s;
     width: 15em;
     z-index: 2;
 
-    nav {
-      ul {
-        li {
-          a {
-            border-bottom: 1px solid white;
-            color: white;
-            display: block;
-            padding: 0.625em 0;
-            text-transform: uppercase;
-          }
-        }
+      a, .logout-button {
+        align-items: center;
+        border-bottom: 1px solid white;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        padding: 0.625em 0;
+        text-transform: uppercase;
       }
-    }
+
+      .logout-button {
+        border-bottom: none;
+        font-size: 1rem;
+        text-align: left;
+        width: 100%;
+      }
+
+      img {
+        height: 23px;
+        margin-right: 5px;
+        width: 23px;
+      }
   }
 
   &.open {
@@ -105,14 +114,15 @@ $headerTransitionSpeed: 0.3s;
       width: 100%;
 
       nav {
+        display: inline-block;
+
         ul {
           li {
             display: inline-block;
 
             a {
               border-bottom: none;
-              display: inline-block;
-              line-height: 50px;
+              line-height: $headerHeight;
               padding: 0 0.625em;
               position: relative;
 
@@ -132,15 +142,20 @@ $headerTransitionSpeed: 0.3s;
                 text-decoration: underline;
               }
             }
-
-            &:last-of-type {
-              a {
-                &::after {
-                  display: none;
-                }
-              }
-            }
           }
+        }
+      }
+
+      .logout-button {
+        border: none;
+        display: inline-flex;
+        line-height: $headerHeight;
+        padding: 0 0.625em;
+        vertical-align: top;
+        width: auto;
+        
+        &:hover {
+          text-decoration: underline;
         }
       }
     }
