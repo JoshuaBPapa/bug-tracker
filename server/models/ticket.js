@@ -61,7 +61,7 @@ module.exports = class Ticket {
   static findById(id, teamId) {
     return db.execute(
       `SELECT
-        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.description, tickets.created, tickets.projectId, tickets.userId, projects.title as projectTitle, users.name AS createdBy
+        tickets.id, tickets.priority, tickets.title, tickets.status, tickets.description, tickets.created, tickets.projectId, tickets.userId AS createdUserId, projects.title as projectTitle, users.name AS createdBy
       FROM
         tickets
       JOIN
