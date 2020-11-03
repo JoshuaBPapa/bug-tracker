@@ -10,7 +10,15 @@ const AuthorisationLevel = ({ value, isOption }) => {
       </option>
     );
   } else {
-    return convertAuthLevelToString(value);
+    const className = convertAuthLevelToString(value)
+      .replace(' ', '-')
+      .toLowerCase();
+
+    return (
+      <span className={`Authorisation-Level ${className}`}>
+        {convertAuthLevelToString(value)}
+      </span>
+    );
   }
 };
 

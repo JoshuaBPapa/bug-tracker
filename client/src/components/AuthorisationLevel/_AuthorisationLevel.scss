@@ -1,0 +1,20 @@
+.Authorisation-Level {
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 0.125em 0.33em;
+
+  &.master-admin, .admin {
+    border: 2px solid $red;
+    color: $red;
+  }
+
+  &.project-manager {
+    border: 2px solid $orange;
+    color: $orange;
+  }
+
+  &.user {
+    border: 2px solid $green;
+    color: $green;
+  }
+}
