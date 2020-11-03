@@ -1,14 +1,14 @@
 import React from 'react';
 
 const Card = ({ header, children }) => (
-  <div>
+  <div className="Card">
     {header ? (
-      <div>
-        <h4>{header}</h4>
+      <div className="card-header">
+        <h3>{header}</h3>
       </div>
     ) : null}
     {children ? (
-      <div>
+      <div className="card-body">
         {children}
       </div>
     ) : null}

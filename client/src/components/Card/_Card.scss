@@ -1,0 +1,22 @@
+.Card {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+  margin: 2em 0;
+
+  .card-header, .card-body {
+    padding: 0.75em;
+  }
+
+  .card-header {
+    background-color: $primaryColour;
+    color: white;
+    text-transform: capitalize;
+  }
+
+  .card-body {
+    background-color: white;
+
+    div {
+      margin: 0.33em 0;
+    }
+  }
+}
