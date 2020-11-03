@@ -1,5 +1,12 @@
 $primaryColour: #0077b5;
 $bgWhite: #e8e8e8;
+$red: #e74c3c;
+$yellow: #e0b70f;
+$green: #2ecc71;
+$orange: #E67E22;
 
 $mdBreak: 768px;
 $lgBreak: 1200px;
+
+// headerHeight in _abstracts rather than _Header due to this value being used in _base
+$headerHeight: 50px;
