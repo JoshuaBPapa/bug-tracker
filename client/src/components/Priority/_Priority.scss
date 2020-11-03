@@ -1,0 +1,30 @@
+.Priority {
+  align-items: center;
+  border-radius: 5px;
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+
+  &.severe {
+    color: $red;
+  }
+
+  &.high {
+    color: $orange
+  }
+
+  &.moderate {
+    color: $yellow;
+  }
+  
+  &.low {
+    color: $green
+  }
+
+  img {
+    height: 25px;
+    margin-right: 5px;
+    width: 25px;
+  }
+}

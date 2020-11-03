@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import ProjectsTable from '../../Table/ProjectsTable/ProjectsTable';
+import ItemTools from '../../ItemTools/ItemTools';
+import AddLink from '../../AddLink/AddLink';
 
 import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
 
@@ -11,9 +12,9 @@ const Projects = () => (
     <PageTitle>
       projects
     </PageTitle>
-    <Link to="/projects/create">
-      Add a new project
-    </Link>
+    <ItemTools>
+      <AddLink url="/projects/create" itemType="project" />
+    </ItemTools>
     <ProjectsTable />
   </div>
 );

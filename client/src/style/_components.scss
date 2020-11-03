@@ -1,21 +1,41 @@
 // --- Header --- //
-@import '../components/Header/Header.scss';
+@import '../components/Header/Header';
 
 // --- Table --- //
-@import '../components/Table/Table.scss';
+@import '../components/Table/Table';
 
 // --- Dark Overlay --- //
-@import '../components/DarkOverlay/DarkOverlay.scss';
+@import '../components/DarkOverlay/DarkOverlay';
 
 // --- Modal --- //
-@import '../components/Modal/Modal.scss';
+@import '../components/Modal/Modal';
+
+// --- Card --- //
+@import '../components/Card/Card';
+
+// --- Item-Tools --- //
+@import '../components/ItemTools/ItemTools';
+
+// --- AuthorisationLevel --- //
+@import '../components/AuthorisationLevel/AuthorisationLevel';
 
 // --- Page Title --- //
-
-@import '../components/PageTitle/PageTitle.scss';
+@import '../components/PageTitle/PageTitle';
 
 // --- Forms --- //
-@import '../components//Forms/Forms.scss';
+@import '../components/Forms/Forms';
+
+// --- Delete Item --- //
+@import '../components/DeleteItem/DeleteItem';
+
+// --- Charts --- //
+@import '../components/Charts/Charts';
+
+// --- Status --- //
+@import '../components/Status/Status';
+
+// --- Priority --- //
+@import '../components/Priority/Priority';
 
 // --- Login Sign Up Page --- //
-@import '../components/Pages/Auth/LoginSignUp.scss';
+@import '../components/Pages/Auth/LoginSignUp';

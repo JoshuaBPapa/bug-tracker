@@ -6,6 +6,8 @@ import DeleteItem from './DeleteItem';
 
 import { AuthContext } from '../../AuthContext';
 
+import deleteIcon from '../../assets/icons/deleteIcon.png';
+
 const DeleteItemContainer = ({ itemType, id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
@@ -39,7 +41,7 @@ const DeleteItemContainer = ({ itemType, id }) => {
   }
 
   return (
-    <div>
+    <div className="Delete-Item-Container">
       <Modal
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}>
@@ -50,7 +52,10 @@ const DeleteItemContainer = ({ itemType, id }) => {
             'teams/team' :
             `${itemType}s/${itemType}/${id}`} />
       </Modal>
-      <button onClick={() => setIsModalOpen(true)}>
+      <button 
+        onClick={() => setIsModalOpen(true)}
+        className="open-delete-modal-button">
+        <img src={deleteIcon} alt="delete" />
         Delete {itemType}
       </button>
     </div>

@@ -10,7 +10,15 @@ const Status = ({ value, isOption }) => {
       </option>
     );
   } else {
-    return convertStatusToString(value);
+    const className = convertStatusToString(value)
+      .replace(' ', '-')
+      .toLowerCase();
+
+    return (
+      <span className={`Status ${className}`}>
+        {convertStatusToString(value)}
+      </span>
+    );
   }
 };
 

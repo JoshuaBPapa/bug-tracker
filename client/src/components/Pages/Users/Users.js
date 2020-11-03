@@ -1,19 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import UsersTable from '../../Table/UsersTable/UsersTable';
+import AddLink from '../../AddLink/AddLink';
 
 import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
+import ItemTools from '../../ItemTools/ItemTools';
 
 const Users = () => (
   <div>
     <PageTitle>
       users
     </PageTitle>
-    <Link to="/users/create">
-      Add a new user
-    </Link>
+    <ItemTools>
+      <AddLink url="/users/create" itemType="user" />
+    </ItemTools>
     <UsersTable />
   </div>
 );

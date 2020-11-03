@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import PageTitle from '../../PageTitle/PageTitle';
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
 import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
-import TicketChartsWrapper from '../../Charts/TicketChartsWrapper';
+import ChartsWrapper from '../../Charts/ChartsWrapper';
 import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
 import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
+import Card from '../../Card/Card';
+import AddLink from '../../AddLink/AddLink';
+import EditLink from '../../EditLink/EditLink';
+import ItemTools from '../../ItemTools/ItemTools';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -21,7 +25,7 @@ const Project = () => {
     sendRequest('GET', `/projects/project/${id}`);
   }, [sendRequest, id]);
 
-  let project = <p>Loading...</p>;
+  let project = <LoadingSpinner />;
   if (error) {
     project = (
       <FeedbackMessage>
@@ -31,23 +35,20 @@ const Project = () => {
   } else if (data) {
    project = (
       <div>
-        <PageTitle>
-          {data.title}
-        </PageTitle>
-        {data.description}
-        <Link to={`/tickets/create/${id}`}>
-          Add a new ticket
-        </Link>
-        <Link to={`/projects/project/${id}/edit`}>
-          Edit
-        </Link>
-        <TicketChartsWrapper>
+        <Card header={data.title}>
+          {data.description}
+          <ItemTools>
+            <AddLink url={`/tickets/create/${id}`} itemType="ticket" />
+            <EditLink url={`/projects/project/${id}/edit`} itemType="project" />
+            <DeleteItemContainer
+              itemType="project"
+              id={id} />
+          </ItemTools>
+        </Card>
+        <ChartsWrapper>
           <TicketsStatusBarChart endpoint={`/project/${id}`}/>
           <TicketsPriorityPieChart endpoint={`/project/${id}`}/>
-        </TicketChartsWrapper>
-        <DeleteItemContainer
-          itemType="project"
-          id={id} />
+        </ChartsWrapper>
         <div>
           <TicketsTable ticketsAssignment={`/project/${id}`} />
         </div>

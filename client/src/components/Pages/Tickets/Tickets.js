@@ -2,7 +2,7 @@ import React from 'react';
 
 import PageTitle from '../../PageTitle/PageTitle';
 import TicketsTable from '../../Table/TicketsTable/TicketsTable';
-import TicketChartsWrapper from '../../Charts/TicketChartsWrapper';
+import ChartsWrapper from '../../Charts/ChartsWrapper';
 import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
 import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
 
@@ -14,10 +14,10 @@ const Tickets = () => (
       tickets
     </PageTitle>
     {/* ticket charts on the tickets page are not fetching tickets assigned to a project or user so an empty string is passed */}
-    <TicketChartsWrapper>
+    <ChartsWrapper>
       <TicketsStatusBarChart endpoint=""/>
       <TicketsPriorityPieChart endpoint=""/>
-    </TicketChartsWrapper>
+    </ChartsWrapper>
     {/* tickets table on the tickets page is not fetching tickets assigned to a project or user so an empty string is passed */}
     <TicketsTable ticketsAssignment="" />
   </div>

@@ -1,0 +1,23 @@
+.Status {
+  border-radius: 5px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+
+  &.backlog {
+    background-color: $red;
+  }
+
+  &.in-progress {
+    background-color: $orange;
+  }
+
+  &.requires-testing {
+    background-color: $yellow;
+  }
+
+  &.complete {
+    background-color: $green;
+  }
+}
