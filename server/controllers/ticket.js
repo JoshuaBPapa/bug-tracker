@@ -132,6 +132,13 @@ exports.getTicketColumnCount = (req, res, next) => {
     req.teamId
   )
     .then(count => {
+      if (!count[0].length) {
+        const error = new Error;
+        error.message = 'No tickets found.';
+        error.statusCode = 404;
+        throw error;
+      }
+
       res.status(200).send(count[0]);
     })
     .catch(err => {
