@@ -1,0 +1,37 @@
+.Charts-Wrapper {
+  background-color: white;
+  box-shadow: $boxShadow;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-bottom: $marginBreak;
+  padding: 1.25em;
+
+  .chart {
+    margin-bottom: 1em;
+    width: 100%;
+
+    .chart-title {
+      font-size: 1.125rem;
+      font-weight: bold;
+    }  
+  }
+  
+  @media (min-width: $mdBreak) {
+    .chart {
+      margin-bottom: $marginBreak;
+      width: 100%;
+    
+      .chart-title {
+        font-size: 1.33rem;
+      }
+    }
+  }
+
+  @media (min-width: $lgBreak) {
+    .chart {
+      margin: 0;
+      width: 50%;
+    }
+  }
+}

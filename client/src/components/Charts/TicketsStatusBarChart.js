@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
-import { VictoryChart, VictoryBar, VictoryAxis, VictoryTooltip } from 'victory';
+import { Bar } from 'react-chartjs-2';
 
 import FeedbackMessage from '../FeedbackMessage/FeedbackMessage';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 import useAxios from '../../hooks/useAxios';
-
-import { convertStatusToString } from '../../helpers/status';
 
 const TicketsStatusBarChart = ({ endpoint }) => {
   const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {
     sendRequest('GET', `tickets/column_count/status${endpoint}`);
-  }, [sendRequest]);
+  }, [sendRequest, endpoint]);
 
-  let barChartContent = <p>loading...</p>;
+  let barChartContent = <LoadingSpinner />;
   if (error) {
     barChartContent = (
       <FeedbackMessage>
@@ -22,65 +21,55 @@ const TicketsStatusBarChart = ({ endpoint }) => {
       </FeedbackMessage>
     );
   } else if (data) {
+    const chartData = {
+      labels: ['Backlog', 'In progress', 'Requires testing', 'Complete'],
+      datasets: [
+        {
+          data: data.map(status => status.count),
+          backgroundColor: [
+            '#e74c3c', // red
+            '#E67E22', // orange
+            '#e0b70f', // yellow
+            '#2ecc71' // green
+          ]
+        }
+      ]
+    };
+
+    const options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+              callback: (value) => value % 1 === 0 ? value : ''
+            }
+          }
+        ]
+      },
+      legend: {
+        display: false
+      },
+      layout: {
+        padding: {
+            top: 15,
+        }
+      } 
+    };
+
     barChartContent = (
-      <div>
-        Status Count
-        <VictoryChart
-          domainPadding={20}>
-          <VictoryAxis
-            tickValues={[4, 3, 2, 1]}
-            tickFormat={[
-              'Backlog',
-              'In progress',
-              'Requires testing',
-              'Complete'
-            ]} />
-          <VictoryAxis
-            dependentAxis={true} />
-          <VictoryBar
-            data={data.map(value => {
-              return {
-                x: value.status,
-                y: value.count,
-                label: `${convertStatusToString(value.status)}: ${value.count}`
-              };
-            })}
-            labelComponent={<VictoryTooltip />}
-            events={[{
-              target: 'data',
-              eventHandlers: {
-                onMouseOver: () => {
-                  return [
-                    {
-                      target: "data",
-                      mutation: () => ({ style: { width: 50 } })
-                    },
-                    {
-                      target: "labels",
-                      mutation: () => ({ active: true })
-                    }
-                  ];
-                },
-                onMouseOut: () => {
-                  return [
-                    {
-                      target: "data",
-                      mutation: () => { }
-                    },
-                    {
-                      target: "labels",
-                      mutation: () => ({ active: false })
-                    }
-                  ];
-                }
-              }
-            }]} />
-        </VictoryChart>
-      </div>
+      <Bar data={chartData} options={options} />
     );
   }
 
-  return barChartContent;
+  return (
+    <div className="chart">
+      <span className="chart-title">
+        Tickets by Status
+      </span>
+      {barChartContent}
+    </div>
+  );
 };
 
 export default TicketsStatusBarChart;

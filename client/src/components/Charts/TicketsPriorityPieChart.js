@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
-import { VictoryPie } from 'victory';
+import { Doughnut } from 'react-chartjs-2';
 
 import FeedbackMessage from '../FeedbackMessage/FeedbackMessage';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 import useAxios from '../../hooks/useAxios';
-
-import { convertPriorityToString } from '../../helpers/priority';
 
 const TicketsPriorityPieChart = ({ endpoint }) => {
   const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {
     sendRequest('GET', `tickets/column_count/priority${endpoint}`);
-  }, [sendRequest]);
+  }, [sendRequest, endpoint]);
 
-  let pieChartContent = <p>loading...</p>;
+  let pieChartContent = <LoadingSpinner />;
   if (error) {
     pieChartContent = (
       <FeedbackMessage>
@@ -22,22 +21,34 @@ const TicketsPriorityPieChart = ({ endpoint }) => {
       </FeedbackMessage>
     );
   } else if (data) {
+    const chartData = {
+      labels: ['Low', 'Moderate', 'High', 'Severe'],
+      datasets: [
+        {
+          data: data.map(priority => priority.count),
+          backgroundColor: [
+            '#2ecc71', // green
+            '#e0b70f', // yellow
+            '#E67E22', // orange
+            '#e74c3c' // red
+          ]
+        }
+      ]
+    };
+
     pieChartContent = (
-      <div>
-        priority count
-        <VictoryPie
-          data={data.map(value => {
-            return {
-              x: value.priority,
-              y: value.count,
-              label: `${convertPriorityToString(value.priority)}: ${value.count}`
-            };
-          })} />
-      </div>
+      <Doughnut data={chartData} />
     );
   }
 
-  return pieChartContent;
+  return (
+    <div className="chart">
+      <span className="chart-title">
+        Tickets by Priority
+      </span>
+      {pieChartContent}
+    </div>
+  );
 };
 
 export default TicketsPriorityPieChart;
