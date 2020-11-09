@@ -12,6 +12,7 @@ import Card from '../../Card/Card';
 import EditLink from '../../EditLink/EditLink';
 import ItemTools from '../../ItemTools/ItemTools';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import PageTitle from '../../PageTitle/PageTitle';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -67,6 +68,9 @@ const User = () => {
             </ItemTools>
           ) : null}
         </Card>
+        <PageTitle>
+          Assigned Tickets
+        </PageTitle>
         <ChartsWrapper>
           <TicketsStatusBarChart endpoint={`/user_tickets/${id}`} />
           <TicketsPriorityPieChart endpoint={`/user_tickets/${id}`} />
@@ -75,6 +79,9 @@ const User = () => {
         {/* fetch and display created tickets data if the selected user's auth level is > 1 */}
         {data.authLevel > 1 ? (
           <>
+            <PageTitle>
+              Created Tickets
+            </PageTitle> 
             <ChartsWrapper>
               <TicketsStatusBarChart endpoint={`/user/${id}`} />
               <TicketsPriorityPieChart endpoint={`/user/${id}`} />
