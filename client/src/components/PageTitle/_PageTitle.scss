@@ -1,4 +1,16 @@
 .Page-Title {
-  margin-bottom: 0.5em;
-  text-transform: capitalize;
+  margin-bottom: 1em;
+
+  h1 {
+    font-size: 1.375rem;
+    text-transform: capitalize;
+
+    @media (min-width: $mdBreak) {
+      font-size: 1.5rem;
+    }
+  
+    @media (min-width: $lgBreak) {
+      font-size: 1.75rem;
+    }
+  }
 }
