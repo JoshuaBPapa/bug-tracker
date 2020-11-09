@@ -1,6 +1,6 @@
 .Card {
-  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
-  margin: 2em 0;
+  box-shadow: $boxShadow;
+  margin-bottom: $marginBreak;
 
   .card-header, .card-body {
     padding: 0.75em;
