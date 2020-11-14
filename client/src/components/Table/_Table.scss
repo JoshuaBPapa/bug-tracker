@@ -1,38 +1,182 @@
 .Table-Container {
   background-color: white;
+  box-shadow: $boxShadow;
+  margin-bottom: $marginBreak;
   min-width: 100%;
   overflow: auto;
   
   table {
     border-spacing: 0;
-    text-align: center;
+    border-collapse: collapse;
     width: 100%;
-    white-space: nowrap;
 
     th {
       button {
+        align-items: center;
         background-color: $primaryColour;
         color: white;
-        display: inline-block;
+        display: inline-flex;
         font-weight: bold;
-        padding: 10px 0;
+        justify-content: left;
+        padding: 10px;
         text-transform: capitalize;  
         width: 100%;
+
+        &:hover {
+          background-color: #0185cc;
+        }
+
+        img {
+          margin-left: 15px;
+          width: 15px;
+        }
       }
     }
 
     tbody {
       tr {
-        background-color: #f8f8f8;
+        border-bottom: 2px solid $bgWhite;
 
-        &:nth-child(odd) {
-          background-color: #ddd;
+        &:last-of-type {
+          border: none;
+        }
+      }
+      
+      td {
+        padding: 10px;
+        
+        a {
+          color: $primaryColour;
+          overflow: hidden;           
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          img {
+            margin-right: 0.625em;
+            width: 16px;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
 
-    td {
-      padding: 10px 5px
+    td, th {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &.id {
+        max-width: 4em;
+        min-width: 4em;
+        text-align: center;
+
+        button {
+          justify-content: center;
+        }
+      }
+
+      &.title {
+        max-width: 20em;
+        min-width: 20em;
+      }
+
+      &.priority {
+        max-width: 8em;
+        min-width: 8em;
+      }
+
+      &.status {
+        max-width: 9em;
+        min-width: 9em;
+      }
+
+      &.users-assigned {
+        max-width: 9.375em;
+        min-width: 9.375em;
+        text-align: center;
+
+        button {
+          justify-content: center;
+        }
+      }
+      
+      &.authority-level {
+        max-width: 9.375em;
+        min-width: 9.375em;
+      }
+
+      &.project {
+        max-width: 6.25em;
+        min-width: 6.25em;
+      }
+
+      &.created {
+        max-width: 10.625em;
+        min-width: 10.625em;
+      }
+
+      &.username, &.job-title {
+        max-width: 8.75em;
+        min-width: 8.75em;
+      }
+
+      &.tickets {
+        max-width: 8.75em;
+        min-width: 8.75em;
+        text-align: center;
+
+        button {
+          justify-content: center;
+        }
+      }
+
+      &.name {
+        max-width: 8.125em;
+        min-width: 8.125em;
+      }
+      
+      &.tickets-assigned {
+        max-width: 8.125em;
+        min-width: 8.125em;
+        text-align: center;
+
+        button {
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  .Pagination {
+    align-items: center;
+    display: flex;
+    padding: 0.5em;
+
+    button {
+      height: 30px;
+      margin: 0 0.25em;
+      width: 30px;
+      
+      &:disabled {
+        cursor: not-allowed;
+      }
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      img {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 }

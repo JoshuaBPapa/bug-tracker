@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
-import TicketsTable from '../../Table/TicketsTable/TicketsTable';
+import Table from '../../Table/Table';
 import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
 import ChartsWrapper from '../../Charts/ChartsWrapper';
 import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
@@ -21,6 +21,33 @@ const Project = () => {
   const { id } = useParams();
   const { data, error, sendRequest } = useAxios();
 
+  const tableHeader = [
+    {
+      text: 'id',
+      key: 'id'
+    },
+    {
+      text: 'title',
+      key: 'title'
+    },
+    {
+      text: 'priority',
+      key: 'priority'
+    },
+    {
+      text: 'status',
+      key: 'status'      
+    },
+    {
+      text: 'users assigned',
+      key: 'usersAssigned'
+    },
+    {
+      text: 'created',
+      key: 'created'
+    }
+  ];
+
   useEffect(() => {
     sendRequest('GET', `/projects/project/${id}`);
   }, [sendRequest, id]);
@@ -33,7 +60,7 @@ const Project = () => {
       </FeedbackMessage>
     );
   } else if (data) {
-   project = (
+    project = (
       <div>
         <Card header={data.title}>
           {data.description}
@@ -46,11 +73,15 @@ const Project = () => {
           </ItemTools>
         </Card>
         <ChartsWrapper>
-          <TicketsStatusBarChart endpoint={`/project/${id}`}/>
-          <TicketsPriorityPieChart endpoint={`/project/${id}`}/>
+          <TicketsStatusBarChart endpoint={`/project/${id}`} />
+          <TicketsPriorityPieChart endpoint={`/project/${id}`} />
         </ChartsWrapper>
         <div>
-          <TicketsTable ticketsAssignment={`/project/${id}`} />
+          <Table
+            initOrderBy="priority"
+            initIsOrderAscending={false}
+            endpoint={`tickets/project/${id}`}
+            header={tableHeader} />
         </div>
       </div>
     );
