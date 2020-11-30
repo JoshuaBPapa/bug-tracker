@@ -3,8 +3,19 @@ import axios from 'axios';
 
 import { AuthContext } from '../AuthContext';
 
+const initState = {
+  loading: false,
+  data: null,
+  error: null,
+  sentDataResponse: null
+}
+
 const fetchReducer = (state, action) => {
   switch (action.type) {
+    case 'RESET': 
+      return {
+        ...initState
+      }
     case 'REQUEST_INIT':
       return {
         ...state,
@@ -31,22 +42,17 @@ const fetchReducer = (state, action) => {
         sentDataResponse: action.payload
       }
     default:
-      throw new Error();
+      throw new Error('Action type not found');
   };
 };
 
 const useAxios = () => {
-  const [state, dispatch] = useReducer(fetchReducer, {
-    loading: false,
-    data: null,
-    error: null,
-    sentDataResponse: null
-  });
+  const [state, dispatch] = useReducer(fetchReducer, initState);
   const requestCancelled = useRef(false);
   const authContext = useContext(AuthContext);
 
   axios.defaults.baseURL = 'http://localhost:8080';
-
+  
   useEffect(() => {
     const reqInterceptor = axios.interceptors.request.use(config => {
       // only send auth headers to endpoints that are not login or signup
@@ -161,12 +167,17 @@ const useAxios = () => {
       });
   }, [authContext]);
 
+  const reset = useCallback(() => {
+    dispatch({ type: 'RESET' });
+  }, []);
+
   return {
     loading: state.loading,
     data: state.data,
     error: state.error,
     sendRequest: sendRequest,
-    sentDataResponse: state.sentDataResponse
+    sentDataResponse: state.sentDataResponse,
+    reset: reset
   };
 };
 
