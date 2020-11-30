@@ -6,7 +6,7 @@ const ComponentSwitcher = ({ componentTitles, children }) => {
   const switches = componentTitles.map((componentSwitch, i) => {
     const hasForwardSlash = () => {
       return i < componentTitles.length - 1 ? (
-        <span class="forward-slash">
+        <span className="forward-slash">
           /
         </span>
       ) : null;
@@ -14,25 +14,23 @@ const ComponentSwitcher = ({ componentTitles, children }) => {
     
     if (i === selectedComponentIndex) {
       return (
-        <>
+        <div key={componentSwitch}>
           <span 
             key={componentSwitch}
             className="switch-active">
             {componentSwitch}
           </span>
           {hasForwardSlash()}
-        </>
+        </div>
       );
     } else {
       return (
-        <>
-          <button 
-            key={componentSwitch}
-            onClick={() => setSelectedComponentIndex(i)}>
+        <div key={componentSwitch}>
+          <button onClick={() => setSelectedComponentIndex(i)}>
             {componentSwitch}
           </button>
           {hasForwardSlash()}
-        </>
+        </div>
       );
     }
   });
