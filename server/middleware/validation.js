@@ -173,7 +173,7 @@ exports.validateComment = [
     .withMessage('Maximum of 25 characters allowed'),
   body('content')
     .trim()
-    .isLength({ max: 500 })
-    .withMessage('Maximum of 500 characters allowed'),
+    .not().isEmpty()
+    .withMessage('Please enter some content'),
   (req, res, next) => validationMiddleware(req, res, next)
 ];
