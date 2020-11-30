@@ -17,10 +17,11 @@ const Form = ({ formFields, endpointToSendData, endpointToGetEditData, onComplet
   const history = useHistory();
   const { loading, data, error, sendRequest, sentDataResponse, reset } = useAxios();
   const validationErrors = error && error.validationErrors;
-
-  // reset useAxios on endpoint changes
+  
+  // reset useAxios and formData on endpoint changes
   useEffect(() => {
     reset();
+    setFormData(initState);
   }, [endpointToGetEditData, endpointToGetEditData, reset])
 
   useEffect(() => {
@@ -40,10 +41,6 @@ const Form = ({ formFields, endpointToSendData, endpointToGetEditData, onComplet
 
         return newState;
       });
-
-    // reset form data if rendering a new form without fetched data after rendering a form with fetched data
-    } else {
-      setFormData(initState);
     }
 
     // redirect the user to the item's page on a successful response from the request
