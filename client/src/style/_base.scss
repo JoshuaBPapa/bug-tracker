@@ -6,12 +6,17 @@
 
 body {
   background-color: $bgWhite;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $primaryFontFamily;
   width: 100%;
 
   &.mobile-nav-scroll-lock {
     overflow-y: hidden;
 		position: fixed;
+  }
+
+  #root {
+    margin: auto;
+    max-width: 1920px;
   }
 }
 
@@ -24,7 +29,7 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $primaryFontFamily;
 }
 
 a {
