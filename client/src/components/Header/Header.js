@@ -49,7 +49,12 @@ const Header = () => {
     window.addEventListener('resize', handleWindowResize);
 
     return () => {
-      window.removeEventListener('resize', handleWindowResize)
+      window.removeEventListener('resize', handleWindowResize);
+
+      document.body.style.top = "";
+      document.body.classList.remove('mobile-nav-scroll-lock');
+
+      window.scrollTo(0, 0);
     };
   }, [handleWindowResize]);
 
