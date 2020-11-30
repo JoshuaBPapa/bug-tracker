@@ -18,7 +18,13 @@ const TableContainer = ({ initOrderBy, initIsOrderAscending, endpoint, header, i
   const [orderBy, setOrderBy] = useState(initOrderBy ? initOrderBy : 'id');
   const [isOrderAscending, setIsOrderAscending] = useState(initIsOrderAscending);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data, error, sendRequest } = useAxios();
+  const { data, error, sendRequest, reset } = useAxios();
+
+  // reset useAxios and paginaton on endpoint changes
+  useEffect(() => {
+    reset();
+    setPageNumber(1);
+  }, [endpoint, reset, setPageNumber]);
 
   useEffect(() => {
     sendRequest(
@@ -137,7 +143,10 @@ const TableContainer = ({ initOrderBy, initIsOrderAscending, endpoint, header, i
   }
 
   return (
-    <div className="Table-Container">
+    <div className="Table">
+      <h2>
+        All Tickets
+      </h2>
       {tableContent}
     </div>
   );
