@@ -1,11 +1,11 @@
 import React from 'react';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import AddLink from '../../AddLink/AddLink';
+import AddLink from '../../ItemTools/AddLink/AddLink';
 import Table from '../../Table/Table';
+import ItemTools from '../../ItemTools/ItemTools';
 
 import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
-import ItemTools from '../../ItemTools/ItemTools';
 
 const Users = () => {
   const tableHeader = [
@@ -36,18 +36,19 @@ const Users = () => {
   ];
 
   return (
-    <div>
+    <div className="Pages Users-Page">
       <PageTitle>
         users
       </PageTitle>
       <ItemTools>
-        <AddLink url="/users/create" itemType="user" />
+        <AddLink url="/users/create" itemType="user" />        
       </ItemTools>
       <Table
         initOrderBy="id"
         initIsOrderAscending={true}
         endpoint="users"
-        header={tableHeader} />
+        header={tableHeader} 
+        itemType="user" />
     </div>
   );
 };

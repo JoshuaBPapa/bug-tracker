@@ -2,17 +2,19 @@ import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
-import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
+import DeleteItem from '../../ItemTools/DeleteItem/DeleteItem';
 import ChartsWrapper from '../../Charts/ChartsWrapper';
 import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
 import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
 import AuthorisationLevel from '../../AuthorisationLevel/AuthorisationLevel';
 import Card from '../../Card/Card';
-import EditLink from '../../EditLink/EditLink';
-import ItemTools from '../../ItemTools/ItemTools';
+import EditLink from '../../ItemTools/EditLink/EditLink';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import PageTitle from '../../PageTitle/PageTitle';
 import Table from '../../Table/Table';
+import Description from '../../Description/Description';
+import ItemTools from '../../ItemTools/ItemTools';
+import ComponentSwitcher from '../../ComponentSwitcher/ComponentSwitcher';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -63,69 +65,75 @@ const User = () => {
     );
   } else if (data) {
     user = (
-      <div className="User">
+      <div className="Pages User-Page">
         <Card header={data.name}>
-          <div>
-            <span className="bold">Job Title: </span>
-            {data.jobTitle}
-          </div>
-          <div>
-            <span className="bold">Authorisation Level: </span>
-            <AuthorisationLevel value={data.authLevel} />
-          </div>
-          <div>
-            <span className="bold">Username: </span>
-            {data.username}
-          </div>
-          <div>
-            <span className="bold">Email: </span>
-            {data.email}
-          </div>
+          <Description>
+            <p>
+              <span className="bold">Job Title: </span>
+              {data.jobTitle}
+            </p>
+            <p>
+              <span className="bold">Authorisation Level: </span>
+              <AuthorisationLevel value={data.authLevel} />
+            </p>
+            <p>
+              <span className="bold">Username: </span>
+              {data.username}
+            </p>
+            <p>
+              <span className="bold">Email: </span>
+              {data.email}
+            </p>
+          </Description>
           {/* add admin tools to the page if the user is an admin */}
           {userAuthLevel > 2 ? (
             <ItemTools>
               <EditLink url={`/users/user/${id}/edit`} itemType="user" />
-              <Link to={`/users/user/${id}/new_password`}>
+              <Link
+                className="item-tool"
+                to={`/users/user/${id}/new_password`}>
                 <img src={changePassword} alt="change password" />
-                change user's password
+                Change user's password
               </Link>
-              <DeleteItemContainer
+              <DeleteItem
                 itemType="user"
                 id={id} />
             </ItemTools>
           ) : null}
         </Card>
-        <PageTitle>
-          Assigned Tickets
-        </PageTitle>
-        <ChartsWrapper>
-          <TicketsStatusBarChart endpoint={`/user_tickets/${id}`} />
-          <TicketsPriorityPieChart endpoint={`/user_tickets/${id}`} />
-        </ChartsWrapper>
-        <Table
-          itemType="ticket"
-          initOrderBy="priority"
-          initIsOrderAscending={false}
-          endpoint={`tickets/user/assigned/${id}`}
-          header={tableHeader} />
-        {/* fetch and display created tickets if the target user's auth level is > 1 */}
-        {data.authLevel > 1 ? (
+        <ComponentSwitcher componentTitles={data.authLevel > 1 ? (
+          ['Assigned Tickets', 'Created Tickets']
+        ) : (
+          ['Assigned Tickets']
+        )}>
           <>
-            <PageTitle>
-              Created Tickets
-            </PageTitle>
             <ChartsWrapper>
-              <TicketsStatusBarChart endpoint={`/user/${id}`} />
-              <TicketsPriorityPieChart endpoint={`/user/${id}`} />
+              <TicketsStatusBarChart endpoint={`/user_tickets/${id}`} />
+              <TicketsPriorityPieChart endpoint={`/user_tickets/${id}`} />
             </ChartsWrapper>
             <Table
               itemType="ticket"
               initOrderBy="priority"
               initIsOrderAscending={false}
-              endpoint={`tickets/user/created/${id}`}
+              endpoint={`tickets/user/assigned/${id}`}
               header={tableHeader} />
           </>
-        ) : null}
+          {/* fetch and display created tickets if the target user's auth level is > 1 */}
+          {data.authLevel > 1 ? (
+            <>
+              <ChartsWrapper>
+                <TicketsStatusBarChart endpoint={`/user/${id}`} />
+                <TicketsPriorityPieChart endpoint={`/user/${id}`} />
+              </ChartsWrapper>
+              <Table
+                itemType="ticket"
+                initOrderBy="priority"
+                initIsOrderAscending={false}
+                endpoint={`tickets/user/created/${id}`}
+                header={tableHeader} />
+            </>
+          ) : null}
+        </ComponentSwitcher>
       </div>
     );
   }

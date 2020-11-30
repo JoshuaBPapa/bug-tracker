@@ -54,7 +54,8 @@ const Tickets = () => {
         initOrderBy="priority"
         initIsOrderAscending={false}
         endpoint="tickets"
-        header={tableHeader} />
+        header={tableHeader} 
+        itemType="ticket" />
     </div>
   );
 };

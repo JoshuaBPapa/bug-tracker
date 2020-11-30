@@ -1,0 +1,141 @@
+.Pages {
+  &.Project-Page, &.Users-Page  {
+    .Item-Tools {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  &.User-Page {
+    .Description {
+      p {
+        margin-bottom: 0.375em;
+
+        &:last-of-type {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  &.Form-Page {
+    margin: auto;
+    max-width: 600px;
+
+    &.User-New-Password {
+      .new-password-note {
+        margin: 0.5em 0;
+      }
+    }
+  }
+
+  &.Login-Sign-Up-Page {
+    background-color: $primaryColour;
+    background-image: linear-gradient(225deg, $primaryColour, #5962be);
+    height: 100vh;
+    position: relative;
+    width: 100%;
+  
+    .login-sign-up-form-wrapper {
+      background-color: white;
+      height: 100vh;
+      max-width: 300px;
+      overflow: auto;
+      padding: 1em 1.25em;
+      position: absolute;
+      right: 0;
+      top: 0%;
+      width: 80%;
+  
+      .login-sign-up-button {
+        display: block;
+        margin: auto;
+        margin-top: 0.75em;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+  
+        &.back-to-login-button {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          margin: 0;
+          margin-bottom: 0.75em;
+  
+          img {
+            height: 20px;
+            margin-right: 10px;
+            width: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  &.Ticket-Page {
+    .project-link {
+      color: $primaryColour;
+      font-size: 1rem;
+      
+      &:hover {
+        text-decoration: underline;
+      }  
+    }  
+
+    .flex-grid {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .card-body {
+        height: 3em;
+        overflow: hidden;           
+        text-overflow: ellipsis;
+        white-space: nowrap;      
+      }        
+
+      @media (min-width: $mdBreak) {
+        .row-1 {
+          display: flex;
+          justify-content: space-between;
+
+          .Card {
+            margin-right: 2em;
+            width: 33%;
+    
+            &:last-of-type {
+              margin-right: 0;
+            }
+          }
+        }
+
+        .row-2 {
+          display: flex;
+          justify-content: space-between;
+
+          .Card {
+            margin-right: 2em;
+            width: 50%;
+    
+            &:last-of-type {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+
+      @media (min-width: $lgBreak) {
+        flex-direction: row;
+
+        .row-1 {
+          margin-right: 2em;
+          width: 60%;
+        }
+
+        .row-2 {
+          width: 40%;
+        }
+      }
+    }
+  }
+}

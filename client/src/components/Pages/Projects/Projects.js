@@ -1,9 +1,9 @@
 import React from 'react';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import ItemTools from '../../ItemTools/ItemTools';
-import AddLink from '../../AddLink/AddLink';
+import AddLink from '../../ItemTools/AddLink/AddLink';
 import Table from '../../Table/Table';
+import ItemTools from '../../ItemTools/ItemTools';
 
 import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
 
@@ -28,7 +28,7 @@ const Projects = () => {
   ];
 
   return (
-    <div>
+    <div className="Pages Project-Page">
       <PageTitle>
         projects
       </PageTitle>

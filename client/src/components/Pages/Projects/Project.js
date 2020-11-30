@@ -3,15 +3,16 @@ import { useParams } from 'react-router-dom';
 
 import FeedbackMessage from '../../FeedbackMessage/FeedbackMessage';
 import Table from '../../Table/Table';
-import DeleteItemContainer from '../../DeleteItem/DeleteItemContainer';
+import DeleteItem from '../../ItemTools/DeleteItem/DeleteItem';
 import ChartsWrapper from '../../Charts/ChartsWrapper';
 import TicketsStatusBarChart from '../../Charts/TicketsStatusBarChart';
 import TicketsPriorityPieChart from '../../Charts/TicketsPriorityPieChart';
 import Card from '../../Card/Card';
-import AddLink from '../../AddLink/AddLink';
-import EditLink from '../../EditLink/EditLink';
-import ItemTools from '../../ItemTools/ItemTools';
+import AddLink from '../../ItemTools/AddLink/AddLink';
+import EditLink from '../../ItemTools/EditLink/EditLink';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import Description from '../../Description/Description';
+import ItemTools from '../../ItemTools/ItemTools';
 
 import useAxios from '../../../hooks/useAxios';
 
@@ -63,13 +64,13 @@ const Project = () => {
     project = (
       <div>
         <Card header={data.title}>
-          {data.description}
+          <Description>
+            {data.description}
+          </Description>
           <ItemTools>
             <AddLink url={`/tickets/create/${id}`} itemType="ticket" />
             <EditLink url={`/projects/project/${id}/edit`} itemType="project" />
-            <DeleteItemContainer
-              itemType="project"
-              id={id} />
+            <DeleteItem itemType="project" id={id} />
           </ItemTools>
         </Card>
         <ChartsWrapper>
@@ -81,7 +82,8 @@ const Project = () => {
             initOrderBy="priority"
             initIsOrderAscending={false}
             endpoint={`tickets/project/${id}`}
-            header={tableHeader} />
+            header={tableHeader}
+            itemType="ticket" />
         </div>
       </div>
     );

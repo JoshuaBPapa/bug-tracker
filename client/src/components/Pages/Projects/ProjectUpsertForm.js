@@ -2,12 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import PageTitle from '../../PageTitle/PageTitle';
-import FormContainer from '../../Forms/FormContainer';
-import ProjectUpsertForm from '../../Forms/ProjectUpsertForm';
+import Form from '../../Form/Form';
 
 import withAuthLevelCheck from '../../../hoc/withAuthLevelCheck';
 
-const ProjectUpsertFormPage = () => {
+const ProjectUpsertForm = () => {
   const { editId } = useParams();
 
   let endpointToSendData, endpointToGetEditData;
@@ -17,20 +16,36 @@ const ProjectUpsertFormPage = () => {
   } else {
     endpointToSendData = 'projects';
   }
+  
+  const formFields = [
+    {
+      title: 'title',
+      key: 'title',
+      element: 'input',
+      type: 'text',
+      initValue: ''
+    },
+    {
+      title: 'description',
+      key: 'description',
+      element: 'input',
+      type: 'text',
+      initValue: ''
+    }
+  ];
 
   return (
-    <div>
+    <div className="Pages Form-Page">
       <PageTitle>
         {editId ? 'edit project' : 'create project'}
       </PageTitle>
-      <FormContainer
+      <Form 
+        formFields={formFields}
         endpointToSendData={endpointToSendData}
-        onCompletionRedirection="/projects/project"
-        endpointToGetEditData={endpointToGetEditData}>
-        <ProjectUpsertForm />
-      </FormContainer>
+        onCompletionRedirect="/projects/project"
+        endpointToGetEditData={endpointToGetEditData} />
     </div>
   );
 };
 
-export default withAuthLevelCheck(ProjectUpsertFormPage, 2);
+export default withAuthLevelCheck(ProjectUpsertForm, 2);
