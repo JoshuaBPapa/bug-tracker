@@ -8,7 +8,7 @@ import { AuthContext } from '../../AuthContext';
 
 import logout from '../../assets/icons/logout.png';
 
-const HeaderContainer = () => {
+const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileWidth, setIsMobileWidth] = useState(false);
   const authContext = useContext(AuthContext);
@@ -76,4 +76,4 @@ const HeaderContainer = () => {
   );
 };
 
-export default HeaderContainer;
+export default Header;
