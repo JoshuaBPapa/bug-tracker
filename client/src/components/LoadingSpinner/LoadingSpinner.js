@@ -2,8 +2,10 @@ import React from 'react';
 
 import './LoadingSpinner.css';
 
-const LoadingSpinner = () => (
-  <div className="lds-ring">
+const LoadingSpinner = ({ hasExtraMargin }) => (
+  <div
+    className="lds-ring"
+    style={hasExtraMargin ? { margin: 5 + 'em auto' } : {}}>
     <div></div>
     <div></div>
     <div></div>
