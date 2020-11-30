@@ -1,0 +1,42 @@
+.Component-Switcher {
+  .switches {
+    align-items: baseline;
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 0.5em;
+
+    .forward-slash {
+      font-size: 1.5rem;
+      margin: 0 0.5em;
+    }
+
+    .switch-active {
+      font-size: 1.375rem;
+      font-weight: bold;
+    }
+    
+    button {
+      color: $primaryColour;
+      font-size: 1.25rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @media (min-width: $mdBreak) {
+      .forward-slash {
+        font-size: 2rem;
+        margin: 0 0.25em;
+      }
+
+      .switch-active {
+        font-size: 1.5rem;
+      }
+
+      .button {
+        font-size: 1.375rem;
+      }
+    }
+  }
+}
