@@ -3,16 +3,15 @@ import React from 'react';
 import DateTime from '../DateTime/DateTime';
 
 const Comment = ({ title, content, author, datePosted }) => (
-  <li>
-    <div>
+  <li className="Comment">
+    <div className="Comment-title">
       {title}
     </div>
-    <div>
+    <div className="Comment-content">
       {content}
     </div>
-    <div>
-      {author}
-      <DateTime value={datePosted} />
+    <div className="Comment-author-date-time">
+      {author} · <DateTime value={datePosted} />
     </div>
   </li>
 );

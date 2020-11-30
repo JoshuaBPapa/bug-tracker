@@ -1,0 +1,35 @@
+.Comments {
+  a {
+    color: $primaryColour;
+    font-size: 1rem;
+    
+    &:hover {
+      text-decoration: underline;
+    }  
+  }
+
+  ul {
+    margin-top: 0.5em;
+
+    .Comment {
+      margin-bottom: 1em;
+
+      &:last-of-type {
+        margin: 0;
+      }
+
+      .Comment-title {
+        font-weight: bold;
+      }
+
+      .Comment-content {
+        font-size: 0.875rem;
+        margin-bottom: 0.625em;
+      }
+
+      .Comment-author-date-time {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}

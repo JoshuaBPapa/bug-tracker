@@ -2,19 +2,19 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import FeedbackMessage from '../FeedbackMessage/FeedbackMessage';
-import CommentList from './CommentList';
 import Comment from './Comment';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 import useAxios from '../../hooks/useAxios';
 
-const CommentsContainer = ({ id }) => {
+const Comments = ({ id }) => {
   const { data, error, sendRequest } = useAxios();
 
   useEffect(() => {
     sendRequest('GET', `tickets/ticket/${id}/comments`);
   }, [sendRequest, id]);
 
-  let commentContent = <p>Loading...</p>;
+  let commentContent = <LoadingSpinner />;
   if (error) {
     commentContent = (
       <FeedbackMessage>
@@ -23,7 +23,7 @@ const CommentsContainer = ({ id }) => {
     );
   } else if (data) {
     commentContent = (
-      <CommentList>
+      <ul>
         {data.map(comment => (
           <Comment
             key={comment.id}
@@ -32,19 +32,18 @@ const CommentsContainer = ({ id }) => {
             author={comment.name}
             datePosted={comment.created} />
         ))}
-      </CommentList>
+      </ul>
     );
   }
 
   return (
-    <div>
-      Comments
+    <div className="Comments">
       <Link to={`/tickets/ticket/${id}/comment`}>
-        add a comment
+        Add a comment
       </Link>
       {commentContent}
     </div>
   );
 };
 
-export default CommentsContainer;
+export default Comments;
