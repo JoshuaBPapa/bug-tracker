@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import useAxios from '../../hooks/useAxios';
 import FeedbackMessage from '../FeedbackMessage/FeedbackMessage';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
-const AssignUsers = ({ assignedUserIds, endpointToSendData, handleSuccess }) => {
+import useAxios from '../../hooks/useAxios';
+
+const AssignUsersModal = ({ assignedUserIds, endpointToSendData, handleSuccess }) => {
   const [assignedUsers, setAssignedUsers] = useState([...assignedUserIds]);
   const { loading, data, error, sendRequest, sentDataResponse } = useAxios();
 
@@ -37,7 +39,7 @@ const AssignUsers = ({ assignedUserIds, endpointToSendData, handleSuccess }) => 
     sendRequest('PUT', endpointToSendData, dataToSend);
   };
 
-  let assignUsersContent = <p>Loading...</p>;
+  let assignUsersContent = <LoadingSpinner />;
   if (error && !data) {
     assignUsersContent = (
       <FeedbackMessage>
@@ -46,31 +48,40 @@ const AssignUsers = ({ assignedUserIds, endpointToSendData, handleSuccess }) => 
     );
   } else if (data) {
     assignUsersContent = (
-      <form onSubmit={handleSubmit}>
-        {data.map(user => (
-          <div key={user.id}>
-            <label>
-              <span>{user.name}</span>
-              <span>{user.jobTitle}</span>
-              <input
-                type="checkbox"
-                checked={assignedUsers.includes(user.id)}
-                onChange={() => handleCheckedUser(user.id)} />
-            </label>
-          </div>
-        ))}
+      <form
+        className="Assign-User-Modal"
+        onSubmit={handleSubmit}>
+        <div className="Assign-User-Modal-users-wrapper">
+          {data.map(user => (
+            <div
+              key={user.id}>
+              <label>
+                <span className="Assigned-Users-name">
+                  {user.name}
+                </span>
+                <span className="Assigned-Users-job-title">
+                  {user.jobTitle}
+                </span>
+                <input
+                  type="checkbox"
+                  checked={assignedUsers.includes(user.id)}
+                  onChange={() => handleCheckedUser(user.id)} />
+              </label>
+            </div>
+          ))}
+        </div>
         <button type="submit">Assign</button>
-        {loading ? <p>loading...</p> : null}
-        {error ? <p>{error}</p> : null}
+        {loading ? <LoadingSpinner /> : null}
+        {error ? <p className="Assign-User-Modal-error">{error}</p> : null}
       </form>
     );
   }
 
   return (
-    <div className="Assign-Users">
+    <div className="Assign-Users-Modal">
       {assignUsersContent}
     </div>
   );
 };
 
-export default AssignUsers;
+export default AssignUsersModal;

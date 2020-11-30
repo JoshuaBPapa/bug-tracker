@@ -1,0 +1,75 @@
+.Assign-Users {  
+  .open-assign-users-modal-button {
+    color: $primaryColour;
+    font-size: 1rem;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  .Assigned-Users-name {
+    font-weight: bold;
+  }
+
+  .Assigned-Users-job-title {
+    font-size: 0.875rem;
+  }
+
+  .Assigned-Users-name, .Assigned-Users-job-title {
+    overflow: hidden;           
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .Assigned-Users-List {
+    margin-top: 0.5em;
+
+    li {
+      display: inline-block;
+      margin-bottom: 0.5em;
+      margin-right: 1.125em;
+      max-width: 100%;
+    }
+  }
+
+  .Assign-User-Modal {
+    .Assign-User-Modal-users-wrapper {
+      margin: 0 0.5em;
+      max-height: 20em;
+      overflow-y: auto;
+
+      div {      
+
+        label {
+          display: block;
+          max-width: 100%;
+          padding-bottom: 0.5em;
+
+          &:hover {
+            cursor: pointer;
+          }
+    
+          span {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .Assign-User-Modal-error {
+      color: $red;
+      display: block;
+      font-size: 0.875rem;
+    }
+
+    button {
+      background-color: $primaryColour;
+      color: white;
+      display: block;
+      font-size: 0.875rem;
+      margin: 0.75em auto;
+      padding: 0.5em;
+    }  
+  }
+}
