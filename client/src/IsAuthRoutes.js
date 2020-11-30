@@ -3,17 +3,17 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 // project pages
 const Projects = lazy(() => import('./components/Pages/Projects/Projects'));
-const ProjectUpsertFormPage = lazy(() => import('./components/Pages/Projects/ProjectUpsertFormPage'));
+const ProjectUpsertForm = lazy(() => import('./components/Pages/Projects/ProjectUpsertForm'));
 const Project = lazy(() => import('./components/Pages/Projects/Project'));
 // ticket pages
 const Ticket = lazy(() => import('./components/Pages/Tickets/Ticket'));
-const TicketUpsertFormPage = lazy(() => import('./components/Pages/Tickets/TicketUpsertFormPage'));
-const TicketCommentFormPage = lazy(() => import('./components/Pages/Tickets/TicketCommentFormPage'));
+const TicketUpsertForm = lazy(() => import('./components/Pages/Tickets/TicketUpsertForm'));
+const TicketCommentForm = lazy(() => import('./components/Pages/Tickets/TicketCommentForm'));
 const Tickets = lazy(() => import('./components/Pages/Tickets/Tickets'));
 // user pages
 const Users = lazy(() => import('./components/Pages/Users/Users'));
-const UserNewPwFormPage = lazy(() => import('./components/Pages/Users/UserNewPwFormPage'));
-const UserUpsertFormPage = lazy(() => import('./components/Pages/Users/UserUpsertFormPage'));
+const UserNewPwForm = lazy(() => import('./components/Pages/Users/UserNewPwForm'));
+const UserUpsertForm = lazy(() => import('./components/Pages/Users/UserUpsertForm'));
 const User = lazy(() => import('./components/Pages/Users/User'));
 const Team = lazy(() => import('./components/Pages/Team/Team'));
 
@@ -29,17 +29,17 @@ const IsAuthRoutes = () => {
       <Route
         path="/projects/project/:editId/edit"
         exact={true}
-        render={() => <ProjectUpsertFormPage />} />
+        render={props => <ProjectUpsertForm key={props.location.pathname} />} />
       {/* project page */}
       <Route
         path="/projects/project/:id"
         exact={true}
-        render={() => <Project />} />
+        render={props => <Project key={props.location.pathname} />} />
       {/* create a project page */}
       <Route
         path="/projects/create"
         exact={true}
-        render={() => <ProjectUpsertFormPage />} />
+        render={() => <ProjectUpsertForm />} />
 
       {/* TICKET ROUTES */}
       {/* tickets page */}
@@ -48,22 +48,22 @@ const IsAuthRoutes = () => {
       <Route
         path="/tickets/ticket/:ticketId/comment"
         exact={true}
-        render={() => <TicketCommentFormPage />} />
+        render={props => <TicketCommentForm key={props.location.pathname} />} />
       {/* edit a ticket page */}
       <Route
         path="/tickets/ticket/:editId/edit"
         exact={true}
-        render={() => <TicketUpsertFormPage />} />
+        render={props => <TicketUpsertForm key={props.location.pathname} />} />
       {/* create a ticket page */}
       <Route
         path="/tickets/create/:assignedProjectId"
         exact={true}
-        render={() => <TicketUpsertFormPage />} />
+        render={props => <TicketUpsertForm key={props.location.pathname} />} />
       {/* ticket page */}
       <Route
         path="/tickets/ticket/:id"
         exact={true}
-        render={() => <Ticket />} />
+        render={props => <Ticket key={props.location.pathname} />} />
 
       {/* USER ROUTES */}
       {/* users page */}
@@ -72,22 +72,22 @@ const IsAuthRoutes = () => {
       <Route
         path="/users/user/:editId/new_password"
         exact={true}
-        render={() => <UserNewPwFormPage />} />
+        render={props => <UserNewPwForm key={props.location.pathname} />} />
       {/* edit a user page */}
       <Route
         path="/users/user/:editId/edit"
         exact={true}
-        render={() => <UserUpsertFormPage />} />
+        render={props => <UserUpsertForm key={props.location.pathname} />} />
       {/* create a user page */}
       <Route
         path="/users/create"
         exact={true}
-        render={() => <UserUpsertFormPage />} />
+        render={() => <UserUpsertForm />} />
       {/* user page */}
       <Route
         path="/users/user/:id"
         exact={true}
-        render={() => <User />} />
+        render={props => <User key={props.location.pathname} />} />
 
       {/* TEAM ROUTES */}
       {/* team page */}
