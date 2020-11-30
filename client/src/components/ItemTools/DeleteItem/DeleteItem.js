@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Modal from '../Modal/Modal';
-import DeleteItem from './DeleteItem';
+import Modal from '../../Modal/Modal';
+import DeleteItemModal from './DeleteItemModal';
 
-import { AuthContext } from '../../AuthContext';
+import { AuthContext } from '../../../AuthContext';
 
-import deleteIcon from '../../assets/icons/deleteIcon.png';
+import deleteIcon from '../../../assets/icons/deleteIcon.png';
 
-const DeleteItemContainer = ({ itemType, id }) => {
+const DeleteItem = ({ itemType, id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authContext = useContext(AuthContext);
   const history = useHistory();
@@ -22,10 +22,15 @@ const DeleteItemContainer = ({ itemType, id }) => {
     }
   };
 
+  let endpointToSendDelete = `${itemType}s/${itemType}/${id}`;
+  if (itemType === 'team') {
+    endpointToSendDelete = 'teams/team';
+  }
+
   let deleteMessage;
   switch (itemType) {
     case 'ticket':
-      deleteMessage = null;
+      deleteMessage = 'This will delete the ticket with all its comments.';
       break;
     case 'project':
       deleteMessage = 'If you delete a project, all tickets assigned to this project will be deleted as well.';
@@ -41,20 +46,19 @@ const DeleteItemContainer = ({ itemType, id }) => {
   }
 
   return (
-    <div className="Delete-Item-Container">
+    <div className="Delete-Item">
       <Modal
+        title="Delete"
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}>
-        <DeleteItem
+        <DeleteItemModal
           deleteMessage={deleteMessage}
           handleSuccess={handleSuccess}
-          deleteEndpoint={itemType === 'team' ?
-            'teams/team' :
-            `${itemType}s/${itemType}/${id}`} />
+          endpointToSendDelete={endpointToSendDelete} />
       </Modal>
-      <button 
+      <button
         onClick={() => setIsModalOpen(true)}
-        className="open-delete-modal-button">
+        className="item-tool">
         <img src={deleteIcon} alt="delete" />
         Delete {itemType}
       </button>
@@ -62,4 +66,4 @@ const DeleteItemContainer = ({ itemType, id }) => {
   );
 };
 
-export default DeleteItemContainer;
+export default DeleteItem;

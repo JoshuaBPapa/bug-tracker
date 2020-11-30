@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import useAxios from '../../hooks/useAxios';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 
-const DeleteItem = ({ deleteMessage, handleSuccess, deleteEndpoint }) => {
+import useAxios from '../../../hooks/useAxios';
+
+const DeleteItem = ({ deleteMessage, handleSuccess, endpointToSendDelete }) => {
   const [isConfirmedChecked, setIsConfirmedChecked] = useState(false);
   const [isSubmitWithoutCheck, setIsSubmitWithoutCheck] = useState(false);
   const { loading, error, sendRequest, sentDataResponse } = useAxios();
@@ -21,26 +23,32 @@ const DeleteItem = ({ deleteMessage, handleSuccess, deleteEndpoint }) => {
       setIsSubmitWithoutCheck(true);
     } else {
       setIsSubmitWithoutCheck(false);
-      sendRequest('DELETE', deleteEndpoint);
+      sendRequest('DELETE', endpointToSendDelete);
     }
   };
 
   return (
-    <div>
+    <div className="Delete-Item-Modal">
       <form onSubmit={submitHandler}>
-        {deleteMessage ? `Note: ${deleteMessage}` : null}
+        {deleteMessage ? <p>Note: {deleteMessage}</p> : null}
         <label>
+          Confirm Delete
           <input
             type="checkbox"
             checked={isConfirmedChecked}
             onChange={() => setIsConfirmedChecked(!isConfirmedChecked)} />
-          <span>Confirm delete</span>
         </label>
-        <button type="submit">Delete</button>
-        {loading ? <p>loading...</p> : null}
-        {error ? <p>{error}</p> : null}
         {isSubmitWithoutCheck ? (
-          <p>Please tick the confirm delete checkbox.</p>
+          <span className="Delete-Item-Modal-error">
+            Please tick the confirm delete checkbox.
+          </span>
+        ) : null}
+        <button type="submit">Delete</button>
+        {loading ? <LoadingSpinner /> : null}
+        {error ? (
+          <span className="Delete-Item-Modal-Error">
+            {error}
+          </span>
         ) : null}
       </form>
     </div>

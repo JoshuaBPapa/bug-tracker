@@ -1,0 +1,35 @@
+.Delete-Item {
+  .Delete-Item-Modal {
+    p {
+      margin-bottom: 0.5em;
+    }
+
+    label {
+      font-size: 0.875rem;
+
+      input {
+        margin-left: 0.5em;
+      }
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+
+    .Delete-Item-Modal-error {
+      color: $red;
+      display: block;
+      font-size: 0.875rem;
+    }
+
+    button {
+      background-color: $primaryColour;
+      color: white;
+      display: block;
+      font-size: 0.875rem;
+      margin: 0.75em auto;
+      padding: 0.5em;
+    }
+  }
+}
