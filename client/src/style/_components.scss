@@ -22,11 +22,8 @@
 // --- Page Title --- //
 @import '../components/PageTitle/PageTitle';
 
-// --- Forms --- //
-@import '../components/Forms/Forms';
-
-// --- Delete Item --- //
-@import '../components/DeleteItem/DeleteItem';
+// --- Form --- //
+@import '../components/Form/Form';
 
 // --- Charts --- //
 @import '../components/Charts/Charts';
@@ -37,5 +34,20 @@
 // --- Priority --- //
 @import '../components/Priority/Priority';
 
-// --- Login Sign Up Page --- //
-@import '../components/Pages/Auth/LoginSignUp';
+// --- Pages --- //
+@import '../components/Pages/Pages';
+
+// --- Assign Users --- //
+@import '../components/AssignUsers/AssignUsers';
+
+// --- Comments --- //
+@import '../components/Comments/Comments';
+
+// --- Description --- //
+@import '../components/Description/Description';
+
+// --- ComponentSwitcher --- //
+@import '../components/ComponentSwitcher/ComponentSwitcher';
+
+// --- FeedbackMessage --- //
+@import '../components/FeedbackMessage/FeedbackMessage';
