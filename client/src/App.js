@@ -1,9 +1,10 @@
 import React, { Suspense, useContext } from 'react';
 
-import HeaderContainer from './components/Header/HeaderContainer';
+import Header from './components/Header/Header';
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
+
 import NotAuthRoutes from './NotAuthRoutes';
 import IsAuthRoutes from './IsAuthRoutes';
-import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 
 import { AuthContext } from './AuthContext';
 
@@ -14,14 +15,12 @@ function App() {
 
   return (
     <div className="App">
-      <Suspense fallback={<LoadingSpinner />}>
+      {authContext.isAuth ? <Header /> : null}
+      <Suspense fallback={<LoadingSpinner hasExtraMargin={true} />}>
         {authContext.isAuth ? (
-          <>
-            <HeaderContainer />
-            <main>
-              <IsAuthRoutes />
-            </main>
-          </>
+          <main>
+            <IsAuthRoutes />
+          </main>
         ) : (
           <NotAuthRoutes />
         )}
