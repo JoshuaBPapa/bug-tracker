@@ -10,7 +10,6 @@ import AuthorisationLevel from '../../AuthorisationLevel/AuthorisationLevel';
 import Card from '../../Card/Card';
 import EditLink from '../../ItemTools/EditLink/EditLink';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
-import PageTitle from '../../PageTitle/PageTitle';
 import Table from '../../Table/Table';
 import Description from '../../Description/Description';
 import ItemTools from '../../ItemTools/ItemTools';
