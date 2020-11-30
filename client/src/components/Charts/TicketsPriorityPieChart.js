@@ -6,8 +6,15 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 import useAxios from '../../hooks/useAxios';
 
+import { convertPriorityToString } from '../../helpers/priority';
+
 const TicketsPriorityPieChart = ({ endpoint }) => {
-  const { data, error, sendRequest } = useAxios();
+  const { data, error, sendRequest, reset } = useAxios();
+
+  // reset useAxios on endpoint changes
+  useEffect(() => {
+    reset();
+  }, [endpoint, reset]);
 
   useEffect(() => {
     sendRequest('GET', `tickets/column_count/priority${endpoint}`);
@@ -21,11 +28,42 @@ const TicketsPriorityPieChart = ({ endpoint }) => {
       </FeedbackMessage>
     );
   } else if (data) {
+    const chartValues = [
+      {
+        priority: 1,
+        count: 0
+      },
+      {
+        priority: 2,
+        count: 0
+      },
+      {
+        priority: 3,
+        count: 0
+      },
+      {
+        priority: 4,
+        count: 0
+      },
+    ];
+
+    chartValues.forEach((chartValue, i) => {
+      const findPriority = data.find(({ priority }) => {
+        return priority === chartValue.priority;
+      });
+
+      if (findPriority) {
+        chartValues[i].count = findPriority.count;
+      }        
+    });
+
     const chartData = {
-      labels: ['Low', 'Moderate', 'High', 'Severe'],
+      labels: chartValues.map(chartValue => {
+        return convertPriorityToString(chartValue.priority);
+      }),
       datasets: [
         {
-          data: data.map(priority => priority.count),
+          data: chartValues.map(chartValue => chartValue.count),
           backgroundColor: [
             '#2ecc71', // green
             '#e0b70f', // yellow
@@ -43,9 +81,9 @@ const TicketsPriorityPieChart = ({ endpoint }) => {
 
   return (
     <div className="chart">
-      <span className="chart-title">
+      <h2>
         Tickets by Priority
-      </span>
+      </h2>
       {pieChartContent}
     </div>
   );

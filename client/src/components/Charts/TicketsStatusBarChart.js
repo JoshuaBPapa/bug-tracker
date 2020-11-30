@@ -6,8 +6,15 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 import useAxios from '../../hooks/useAxios';
 
+import { convertStatusToString } from '../../helpers/status';
+
 const TicketsStatusBarChart = ({ endpoint }) => {
-  const { data, error, sendRequest } = useAxios();
+  const { data, error, sendRequest, reset } = useAxios();
+
+  // reset useAxios on endpoint changes
+  useEffect(() => {
+    reset();
+  }, [endpoint, reset]);
 
   useEffect(() => {
     sendRequest('GET', `tickets/column_count/status${endpoint}`);
@@ -21,11 +28,42 @@ const TicketsStatusBarChart = ({ endpoint }) => {
       </FeedbackMessage>
     );
   } else if (data) {
+    const chartValues = [
+      {
+        status: 1,
+        count: 0
+      },
+      {
+        status: 2,
+        count: 0
+      },
+      {
+        status: 3,
+        count: 0
+      },
+      {
+        status: 4,
+        count: 0
+      },
+    ];
+
+    chartValues.forEach((chartValue, i) => {
+      const findStatus = data.find(({ status }) => {
+        return status === chartValue.status;
+      });
+
+      if (findStatus) {
+        chartValues[i].count = findStatus.count;
+      }        
+    });
+
     const chartData = {
-      labels: ['Backlog', 'In progress', 'Requires testing', 'Complete'],
+      labels: chartValues.map(chartValue => {
+        return convertStatusToString(chartValue.status);
+      }),
       datasets: [
         {
-          data: data.map(status => status.count),
+          data: chartValues.map(chartValue => chartValue.count),
           backgroundColor: [
             '#e74c3c', // red
             '#E67E22', // orange
@@ -64,9 +102,9 @@ const TicketsStatusBarChart = ({ endpoint }) => {
 
   return (
     <div className="chart">
-      <span className="chart-title">
+      <h2>
         Tickets by Status
-      </span>
+      </h2>
       {barChartContent}
     </div>
   );
