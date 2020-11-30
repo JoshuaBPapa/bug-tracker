@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import FormField from './FormField';
@@ -8,13 +8,20 @@ import FormError from './FormError';
 import useAxios from '../../hooks/useAxios';
 
 const Form = ({ formFields, endpointToSendData, endpointToGetEditData, onCompletionRedirect }) => {
-  const initState = formFields.reduce((accumlator, field) => {
-    return { ...accumlator, [field.key]: field.initValue }
-  }, {});
+  const initState = useMemo(() => {
+    return formFields.reduce((accumlator, field) => {
+      return { ...accumlator, [field.key]: field.initValue }
+    }, {});
+  }, [formFields]);
   const [formData, setFormData] = useState(initState);
   const history = useHistory();
-  const { loading, data, error, sendRequest, sentDataResponse } = useAxios();
+  const { loading, data, error, sendRequest, sentDataResponse, reset } = useAxios();
   const validationErrors = error && error.validationErrors;
+
+  // reset useAxios on endpoint changes
+  useEffect(() => {
+    reset();
+  }, [endpointToGetEditData, endpointToGetEditData, reset])
 
   useEffect(() => {
     // if editing an existing item, get data to pre-fill fields
@@ -33,6 +40,10 @@ const Form = ({ formFields, endpointToSendData, endpointToGetEditData, onComplet
 
         return newState;
       });
+
+    // reset form data if rendering a new form without fetched data after rendering a form with fetched data
+    } else {
+      setFormData(initState);
     }
 
     // redirect the user to the item's page on a successful response from the request
@@ -46,7 +57,8 @@ const Form = ({ formFields, endpointToSendData, endpointToGetEditData, onComplet
     sendRequest,
     history,
     onCompletionRedirect,
-    sentDataResponse
+    sentDataResponse,
+    initState
   ]);
 
   const handleSubmit = e => {
