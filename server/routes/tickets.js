@@ -64,12 +64,14 @@ router.get(
 // POST a new ticket
 router.post(
   '/tickets/:assignedProjectId',
+  authorisationMiddleWare.checkTicketAuthorisation(2),
   validationMiddleware.validateTicket,
   ticketControllers.postCreateTicket
 );
 // POST a comment to a ticket
 router.post(
   '/tickets/ticket/:ticketId/comments',
+  authorisationMiddleWare.checkTicketAuthorisation(1),
   validationMiddleware.validateComment,
   commentControllers.postCreateComment
 );
@@ -84,6 +86,7 @@ router.put(
 // PUT a ticket
 router.put(
   '/tickets/ticket/:editId',
+  authorisationMiddleWare.checkTicketAuthorisation(1),
   validationMiddleware.validateTicket,
   ticketControllers.putUpdateTicket
 );
@@ -91,6 +94,7 @@ router.put(
 // DELETE a ticket
 router.delete(
   '/tickets/ticket/:ticketId',
+  authorisationMiddleWare.checkTicketAuthorisation(2),
   ticketControllers.deleteTicket
 );
 
