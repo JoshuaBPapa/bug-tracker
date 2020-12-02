@@ -16,7 +16,10 @@ const setPagination = (req, count, next) => {
 
 exports.calcPagination = (table, parentTable) => {
   return (req, res, next) => {
-    const { parentId } = req.params;
+    let parentId;
+    if (parentTable === 'user') parentId = req.params.userId;
+    else parentId = req.params.parentId;
+    
     if (!parentId) parentTable = null;
 
     // parent table must be passed in singular form. For example: project, user
@@ -30,6 +33,7 @@ exports.calcPagination = (table, parentTable) => {
   };
 };
 
+// get a count of tickets assigned to a user
 exports.calcPaginationUserTickets = (req, res, next) => {
   Pagination.getTotalRowCountUserTickets(req.params.userId, req.teamId)
     .then(count => {
