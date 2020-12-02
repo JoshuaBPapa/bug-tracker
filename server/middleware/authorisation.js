@@ -53,13 +53,12 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
     }
 
     if (userAuthLevel === 1) {
-      // level 1 users can only GET and PUT tickets
-      // they can not assign users to tickets though
-      if (req.method === 'POST' || req.method === 'DELETE') {
+      // level 1 users can not DELETE tickets
+      if (req.method === 'DELETE') {
         throw authLevelError;
       }
 
-      // level 1 users can only GET the tickets assigned to them
+      // level 1 users can only GET a list of tickets assigned to them
       if (
         req.path.includes('/tickets/user/assigned') &&
         Number(req.params.userId) !== req.userId
@@ -69,23 +68,23 @@ exports.checkTicketAuthorisation = requiredAuthLevel => {
 
       // level 1 users can only GET the column count of tickets assigned to them
       if (
-        req.path.includes('/tickets/column_count/user_tickets') &&
+        req.path.includes('/tickets/column_count') &&
         Number(req.params.parentId) !== req.userId
         ) {
         throw authLevelError;
       }
       
-      // level 1 users need to be allocated to a ticket to access it
+      // level 1 users need to be assigned to a ticket to access it
       if (req.params.ticketId) {
-      Ticket.findUsersAssignedToTicket(req.params.ticketId, req.teamId)
-        .then(users => {
-          if (!users[0].find(user => user.id === req.userId)) {
-            throw authLevelError;
-          }
-        })
-        .catch(err => {
-          next(err);
-        });
+        Ticket.findUsersAssignedToTicket(req.params.ticketId, req.teamId)
+          .then(users => {
+            if (!users[0].find(user => user.id === req.userId)) {
+              throw authLevelError;
+            }
+          })
+          .catch(err => {
+            next(err);
+          });
       }
     }
 
@@ -100,6 +99,7 @@ exports.checkTargetIsMasterAdmin = (req, res, next) => {
 
   User.findById(targetUserId, req.teamId)
     .then(user => {
+      console.log(user[0])
       if (user[0][0].authLevel === 4) {
         // users under level 4 can not access the master admin
         if (userAuthLevel < 4) {
@@ -116,20 +116,18 @@ exports.checkTargetIsMasterAdmin = (req, res, next) => {
 
         // prevent the master admin from reducing their authorisation level
         if (method === 'PUT') {
-          if (Number(targetUserId) === req.userId && Number(req.body.authLevel) < 4) {
+          if (Number(targetUserId) === req.userId && req.body.authLevel) {
             const error = new Error;
-            error.message = 'The master admin can not reduce their authorisation level.';
+            error.message = 'The master admin can not change their authorisation level.';
             error.statusCode = 403;
             throw error;
           }
         }
       }
 
+      next();
     })
     .catch(err => {
       next(err);
     });
-
-  next();
 };
-
