@@ -6,6 +6,9 @@
   overflow: auto;
   padding: 1.25em;
 
+  h2 {
+    text-transform: capitalize;
+  }
   
   table {
     border-spacing: 0;

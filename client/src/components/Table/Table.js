@@ -145,7 +145,7 @@ const TableContainer = ({ initOrderBy, initIsOrderAscending, endpoint, header, i
   return (
     <div className="Table">
       <h2>
-        All Tickets
+        All {itemType}s
       </h2>
       {tableContent}
     </div>
