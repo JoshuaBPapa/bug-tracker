@@ -38,7 +38,11 @@ const FormField = ({ field, value, changed, validationError }) => {
           isOption={true} />
       ));
     } else {
-      options = field.options;
+      options = field.options.map(option => (
+        <option value={option} key={option}>
+          {option}
+        </option>
+      ));
     }
 
     formFieldContent = (

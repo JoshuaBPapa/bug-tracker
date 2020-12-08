@@ -5,6 +5,7 @@
     .form-title {
       display: block;
       text-transform: capitalize;
+      margin-bottom: 0.25em;
     }
 
     input, textarea {
@@ -15,6 +16,11 @@
     textarea {
       font-family: $primaryFontFamily;
       min-height: 6.25em;
+    }
+
+    select {
+      font-size: 0.875rem;
+      padding: 0.33em 0;
     }
   }
 
