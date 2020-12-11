@@ -2,7 +2,9 @@
 ## Bug Tracker
 A full stack web app built with React, Node, Express, and SQL. Bugs are tracked by creating tickets attached to projects. Users can then be assigned to these tickets.
 
- 
+**DEMO**    
+https://joshuapapa.com/bug-tracker
+
 When a user signs up, they can create other users linked to their team. These newly created users will then be able to login using the team name and given username & password. Created users can be given different levels of authorisation which restrict them to certain functions. Admin users have full access, meaning they can create, edit, update, and delete all items in a team (users, projects, and tickets). Project managers also have the same level of access apart from modifying users. Project managers and admins can assign tickets to all other users of the team. A basic user only has the authorisation to view, edit, and comment on the tickets assigned to them.
 
 **Creating a Team**  
